@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<!-- tag::textinput[] -->
+<div th:fragment="textinput(labelText, fieldName, cssClass)"
+     th:with="inputType=${inputType?:'text'},placeholder=${placeholder?:''}"
+     th:class="${cssClass}">
+    <label th:for="${fieldName}" class="block text-sm font-medium leading-5 text-gray-700"
+           th:text="${labelText}">
+        Text input label
+    </label>
+    <div class="mt-1 relative rounded-md shadow-sm">
+        <input th:id="${fieldName}"
+               th:type="${inputType}"
+               th:placeholder="${placeholder}"
+               th:field="*{__${fieldName}__}"
+               class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+               th:classappend="${#fields.hasErrors('__${fieldName}__')?'border-red-300 focus:border-red-300 focus:shadow-outline-red':''}">
+        <div th:if="${#fields.hasErrors('__${fieldName}__')}"
+             class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </div>
+    </div>
+    <p th:if="${#fields.hasErrors('__${fieldName}__')}"
+       th:text="${#strings.listJoin(#fields.errors('__${fieldName}__'), ', ')}"
+       class="mt-2 text-sm text-red-600" th:id="'__${fieldName}__'+ '-error'">Field validation error message(s).</p>
+</div>
+<!-- end::textinput[] -->
+<div th:fragment="fielderrors"
+     class="rounded-md bg-red-50 p-4 mb-4"
+     th:if="${#fields.hasErrors()}">
+    <div class="flex">
+        <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </div>
+        <div class="ml-3">
+            <h3 class="text-sm leading-5 font-medium text-red-800"
+                th:text="#{error.messages.summary.title(${#fields.errors().size()})}">
+                There were 2 errors with your submission
+            </h3>
+            <div class="mt-2 text-sm leading-5 text-red-700">
+                <ul class="list-disc pl-5">
+                    <li th:each="err,iter : ${#fields.errors()}" th:text="${err}"
+                        th:classappend="${iter.index > 0?'mt-1':''}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

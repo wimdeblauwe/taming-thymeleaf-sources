@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<div th:fragment="title-with-button(title, buttonIcon, buttonText, buttonLink)"
+     class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"> <!--.-->
+    <div class="flex justify-between">
+        <h1 class="text-2xl font-semibold text-gray-900"
+            th:text="${title}">Title</h1> <!--.-->
+        <span class="inline-flex rounded-md shadow-sm">
+  <a  th:href="${buttonLink}"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition ease-in-out duration-150"> <!--.-->
+      <svg th:replace="__${buttonIcon}__"></svg> <!--.-->
+        [[${buttonText}]] <!--.-->
+  </a>
+        </span>
+    </div>
+</div>
+</div>
+</html>
