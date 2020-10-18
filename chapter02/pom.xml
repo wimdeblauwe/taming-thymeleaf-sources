@@ -11,7 +11,7 @@
 	<groupId>com.tamingthymeleaf</groupId>
 	<artifactId>taming-thymeleaf-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Taming Thymeleaf 02.01</name>
+	<name>Taming Thymeleaf 02</name>
 	<description>Example application for the Taming Thymeleaf book</description>
 
 	<properties>
