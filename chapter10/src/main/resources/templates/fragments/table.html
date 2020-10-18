@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<body>
+<table>
+    <thead>
+    <tr>
+        <!-- tag::th[] -->
+        <th th:fragment="header(title)"
+            th:with="hideOnMobile=${hideOnMobile?:false}"
+            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+            th:classappend="${hideOnMobile?'hidden sm:table-cell':''}"
+            th:text="${title}">
+            Header title
+        </th>
+        <!-- end::th[] -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <!-- tag::td[] -->
+        <td th:fragment="data(contents)"
+            th:with="primary=${primary?: false},hideOnMobile=${hideOnMobile?:false}"
+            class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
+            th:classappend="|${primary?'font-medium text-gray-900':''} ${hideOnMobile?'hidden sm:table-cell':''}|"
+            th:text="${contents}">
+            Table data contents
+        </td>
+        <!-- end::td[] -->
+        <!-- tag::tdWithLink[] -->
+        <td th:fragment="dataWithLink(linkText, linkUrl)"
+            class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+            <a th:href="${linkUrl}"
+               th:text="${linkText}"
+               class="text-indigo-600 hover:text-indigo-900">Edit</a>
+        </td>
+        <td>bla</td>
+        <!-- end::tdWithLink[] -->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
