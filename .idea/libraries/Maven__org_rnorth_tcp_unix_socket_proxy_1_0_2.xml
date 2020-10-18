@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.rnorth:tcp-unix-socket-proxy:1.0.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/rnorth/tcp-unix-socket-proxy/1.0.2/tcp-unix-socket-proxy-1.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/rnorth/tcp-unix-socket-proxy/1.0.2/tcp-unix-socket-proxy-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/rnorth/tcp-unix-socket-proxy/1.0.2/tcp-unix-socket-proxy-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
