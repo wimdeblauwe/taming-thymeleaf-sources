@@ -16,15 +16,7 @@ import java.util.UUID;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class TamingThymeleafApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
-	@TestConfiguration
-	static class TestConfig {
-		@Bean
-		public UniqueIdGenerator<UUID> uniqueIdGenerator() { //<.>
-			return new InMemoryUniqueIdGenerator();
-		}
-	}
+    @Test
+    void contextLoads() {
+    }
 }
