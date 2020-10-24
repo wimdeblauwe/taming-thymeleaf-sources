@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+    <title th:text="#{error}">Error</title>
+</head>
+<body>
+<!--/*@thymesVar id="url" type="String"*/-->
+<div layout:fragment="page-content">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div class="py-4">
+            <div class="text-gray-500">
+                <p th:text="#{error.page.not.found}" class="mb-6">Page not found.</p>
+                <a th:href="@{/}" class="flex items-center text-sm text-green-600 hover:text-green-900">
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-2">
+                        <path fill-rule="evenodd"
+                              d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                    <span th:text="#{back.to.home.page}">Back to home page</span> </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
