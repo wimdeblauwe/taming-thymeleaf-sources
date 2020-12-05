@@ -1,0 +1,154 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+        th:with="activeMenuItem='users'">
+
+<head>
+    <title>Users</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <h1 class="text-2xl font-semibold text-gray-900"
+            th:text="${editMode?.name() == 'UPDATE'}?#{user.edit}:#{user.create}">Create user</h1>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div class="py-4">
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+
+                <form id="user-form"
+                      th:object="${user}"
+                      th:action="${editMode?.name() == 'UPDATE'}?@{/users/{id}(id=${user.id})}:@{/users/create}"
+                      method="post"
+                      enctype="multipart/form-data">
+                    <div>
+                        <div th:replace="fragments/forms :: fielderrors"></div>
+                        <div class="grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                            <input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}">
+                            <!-- tag::avatar[] -->
+                            <div class="sm:col-span-6 flex flex-col items-center sm:flex-row sm:justify-start">
+                                <img id="avatarImage"
+                                     th:src="${editMode?.name() == 'UPDATE' && user.avatarBase64Encoded != null}?${'data:image/jpeg;base64,' + user.avatarBase64Encoded}:'/img/user.svg'"
+                                     class="inline-block object-cover w-32 h-32 rounded-full overflow-hidden bg-gray-100 cursor-pointer"
+                                     th:classappend="${editMode?.name() == 'UPDATE' && user.avatarBase64Encoded != null}?'':'p-6'">
+                                <!--.-->
+                                <input id="avatarFile" type="file" name="avatarFile" class="hidden"> <!--.-->
+                                <button id="selectAvatarButton"
+                                        type="button"
+                                        class="ml-4 py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
+                                        th:text="#{user.avatar.add}">Add picture
+                                </button> <!--.-->
+                            </div>
+                            <!-- end::avatar[] -->
+                            <!-- tag::userRole[] -->
+                            <div class="sm:col-span-2">
+                                <label for="userRole" class="block text-sm leading-5 font-medium text-gray-700">User
+                                    Role</label>
+                                <select id="userRole"
+                                        class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-green focus:border-blue-green sm:text-sm sm:leading-5"
+                                        th:field="*{userRole}"> <!--.-->
+                                    <option th:each="role : ${possibleRoles}"
+                                            th:text="#{'UserRole.' + ${role.name()}}"
+                                            th:value="${role.name()}">User <!--.-->
+                                    </option>
+                                </select>
+                            </div>
+                            <!-- end::userRole[] -->
+                            <div class="sm:col-span-6">
+                                <label class="block text-sm font-medium leading-5 text-gray-700"
+                                       th:text="#{user.gender}">
+                                    Gender
+                                </label>
+                                <div>
+                                    <th:block th:each="possibleGender,iter : ${genders}">
+                                        <input type="radio"
+                                               th:id="${'gender-'+possibleGender}"
+                                               th:field="*{gender}"
+                                               th:value="${possibleGender}"
+                                               class="mr-1 form-radio transition duration-150 ease-in-out sm:text-sm sm:leading-5 text-green-500 focus:shadow-outline-green"
+                                               th:classappend="${iter.index > 0 ?'ml-4':''}"
+                                        >
+                                        <label th:for="${'gender-'+possibleGender}"
+                                               th:text="#{'Gender.'+${possibleGender}}"
+                                               class="sm:text-sm sm:leading-5">
+                                        </label>
+                                    </th:block>
+                                    <p th:if="${#fields.hasErrors('gender')}"
+                                       th:text="${#strings.listJoin(#fields.errors('gender'), ', ')}"
+                                       class="mt-2 text-sm text-red-600" id="gender-error">Gender validation error
+                                        message(s).</p>
+                                </div>
+                            </div>
+
+                            <!-- tag::textinputs[] -->
+                            <div th:replace="fragments/forms :: textinput(#{user.firstName}, 'firstName', 'sm:col-span-3')"></div>
+                            <div th:replace="fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')"></div>
+                            <div th:replace="fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')"></div>
+                            <th:block th:if="${editMode?.name() == 'CREATE'}"> <!--.-->
+                                <div th:replace="fragments/forms :: textinput(labelText=#{user.password}, fieldName='password', cssClass='sm:col-span-4', inputType='password')"></div>
+                                <div th:replace="fragments/forms :: textinput(labelText=#{user.password.repeated}, fieldName='passwordRepeated', cssClass='sm:col-span-4', inputType='password')"></div>
+                            </th:block>
+                            <div th:replace="fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')"></div>
+                            <div class="sm:col-span-2"></div>
+                            <div th:replace="fragments/forms :: dateinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2')"></div>
+                            <!-- end::textinputs[] -->
+                        </div>
+                    </div>
+                    <div class="mt-8 border-t border-gray-200 pt-5">
+                        <div class="flex justify-end">
+      <span class="inline-flex rounded-md shadow-sm">
+        <button type="button"
+                class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                th:text="#{cancel}">
+          Cancel
+        </button>
+      </span>
+                            <span class="ml-3 inline-flex rounded-md shadow-sm">
+        <button id="submit-button"
+                type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
+                th:text="${editMode?.name() == 'UPDATE'}?#{save}:#{create}"> <!--.-->
+          Save
+        </button>
+      </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tag::avatar-js[] -->
+<th:block layout:fragment="page-scripts">
+    <script>
+        document.querySelector('#selectAvatarButton').addEventListener('click', evt => { // <.>
+            document.querySelector('#selectAvatarButton').blur();
+            document.querySelector('#avatarFile').click();
+        });
+
+        document.querySelector('#avatarImage').addEventListener('click', evt => { // <.>
+            document.querySelector('#avatarImage').blur();
+            document.querySelector('#avatarFile').click();
+        });
+
+
+        document.querySelector('#avatarFile').addEventListener('change', evt => { // <.>
+            previewImage();
+        });
+
+        function previewImage() {
+            var uploader = document.querySelector('#avatarFile');
+            if (uploader.files && uploader.files[0]) {
+                document.querySelector('#avatarImage').src = window.URL.createObjectURL(uploader.files[0]); // <.>
+                document.querySelector('#avatarImage').classList.remove('p-6'); //<.>
+            }
+        }
+    </script>
+</th:block>
+<!-- end::avatar-js[] -->
+</body>
+</html>
+<!-- end::full[] -->

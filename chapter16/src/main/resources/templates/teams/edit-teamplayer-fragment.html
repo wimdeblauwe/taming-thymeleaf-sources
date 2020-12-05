@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<!-- tag::main[] -->
+<div th:fragment="teamplayer-form"
+     class="col-span-6 flex items-stretch"
+     th:id="${'teamplayer-form-section-' + __${index}__}"
+     th:object="${__${teamObjectName}__}"> <!--.-->
+    <!-- end::main[] -->
+    <div class="grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+        <div class="sm:col-span-2">
+            <div class="mt-1 rounded-md shadow-sm">
+                <select class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        th:field="*{players[__${index}__].playerId}">
+                    <option th:each="user : ${users}"
+                            th:text="${user.userName.fullName}"
+                            th:value="${user.id.asString()}">
+                </select>
+            </div>
+        </div>
+        <div class="sm:col-span-2">
+            <div class="mt-1 rounded-md shadow-sm">
+                <select class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        th:field="*{players[__${index}__].position}">
+                    <option th:each="position : ${positions}"
+                            th:text="#{'PlayerPosition.' + ${position}}"
+                            th:value="${position}">
+                </select>
+            </div>
+        </div>
+        <!-- tag::delete[] -->
+        <div class="ml-1 sm:col-span-2 flex items-center text-green-600 hover:text-green-900">
+            <div class="h-6 w-6">
+                <svg th:replace="trash"></svg>
+            </div>
+            <a href="#"
+               class="ml-1"
+               th:text="#{team.player.remove}"
+               x-data
+               th:attr="data-formindex=__${index}__"
+               @click="removeTeamPlayerForm($el.dataset.formindex)"> <!--.-->
+            </a>
+        </div>
+        <!-- end::delete[] -->
+    </div>
+</div>
+</html>

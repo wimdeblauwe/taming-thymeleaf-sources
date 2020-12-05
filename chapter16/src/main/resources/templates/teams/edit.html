@@ -1,0 +1,129 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/layout}"
+        th:with="activeMenuItem='teams'">
+
+<head>
+    <title>Teams</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <h1 class="text-2xl font-semibold text-gray-900"
+            th:text="${editMode?.name() == 'UPDATE'}?#{team.edit}:#{team.create}">Create team</h1>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div class="py-4">
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+
+                <form id="team-form"
+                      th:object="${team}"
+                      th:action="${editMode?.name() == 'UPDATE'}?@{/teams/{id}(id=${team.id})}:@{/teams/create}"
+                      method="post"
+                      enctype="multipart/form-data">
+                    <div>
+                        <div th:replace="fragments/forms :: fielderrors"></div>
+                        <div class="grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                            <input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}">
+
+                            <div th:replace="fragments/forms :: textinput(#{team.name}, 'name', 'sm:col-span-3')"></div>
+                            <div class="sm:col-span-3"></div>
+                            <!-- tag::coach-select[] -->
+                            <div class="sm:col-span-3">
+                                <label for="coachId" class="block text-sm font-medium leading-5 text-gray-700"
+                                       th:text="#{team.coach}">
+                                </label>
+                                <div class="mt-1 rounded-md shadow-sm">
+                                    <select th:field="*{coachId}"
+                                            class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                        <option th:each="user : ${users}"
+                                                th:text="${user.userName.fullName}"
+                                                th:value="${user.id.asString()}">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- end::coach-select[] -->
+                            <div class="sm:col-span-3"></div>
+                            <!-- tag::players[] -->
+                            <h3>Players</h3>
+                            <div class="col-span-6 ml-4">
+                                <div id="teamplayer-forms"
+                                     th:data-teamplayers-count="${team.players.length}"> <!--.-->
+                                    <th:block th:each="player, iter : ${team.players}">
+                                        <div th:replace="teams/edit-teamplayer-fragment :: teamplayer-form(index=${iter.index}, teamObjectName='team')"></div>
+                                        <!--.-->
+                                    </th:block>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="#"
+                                       class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
+                                       id="add-extra-teamplayer-form-button"
+                                       th:text="#{team.player.add.extra}"
+                                       @click="addExtraTeamPlayerForm()"
+                                    ></a> <!--.-->
+                                </div>
+                            </div>
+                            <!-- end::players[] -->
+                        </div>
+                    </div>
+                    <div class="mt-8 border-t border-gray-200 pt-5">
+                        <div class="flex justify-end">
+      <span class="inline-flex rounded-md shadow-sm">
+        <button type="button"
+                class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                th:text="#{cancel}">
+          Cancel
+        </button>
+      </span>
+                            <span class="ml-3 inline-flex rounded-md shadow-sm">
+        <button id="submit-button"
+                type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
+                th:text="${editMode?.name() == 'UPDATE'}?#{save}:#{create}">
+          Save
+        </button>
+      </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- tag::page-scripts[] -->
+<th:block layout:fragment="page-scripts">
+    <script>
+        function addExtraTeamPlayerForm() { // <.>
+            const teamPlayerForms = document.getElementById('teamplayer-forms'); // <.>
+            const count = teamPlayerForms.getAttribute('data-teamplayers-count'); // <.>
+            fetch(`/teams/edit-teamplayer-fragment?index=${count}`) // <.>
+                    .then(response => response.text()) // <.>
+                    .then(fragment => {
+                        teamPlayerForms.appendChild(htmlToElement(fragment)); // <.>
+                        teamPlayerForms.setAttribute('data-teamplayers-count', parseInt(count) + 1); // <.>
+                    });
+        }
+
+        <!-- tag::removeTeamPlayerForm[] -->
+        function removeTeamPlayerForm(formIndex) {
+            const teamplayerForm = document.getElementById('teamplayer-form-section-' + formIndex);
+            teamplayerForm.parentElement.removeChild(teamplayerForm);
+        }
+
+        <!-- end::removeTeamPlayerForm[] -->
+
+        function htmlToElement(html) {
+            const template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
+        }
+    </script>
+</th:block>
+<!-- end::page-scripts[] -->
+</body>
+</html>
+<!-- end::full[] -->

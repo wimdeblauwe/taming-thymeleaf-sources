@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<!-- tag::duet[] -->
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Taming Thymeleaf</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.1.0/dist/duet/duet.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.0.1/dist/duet/duet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.1.0/dist/duet/themes/default.css"/>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<!-- end::duet[] -->
+<body>
+<div class="h-screen flex overflow-hidden bg-gray-100"
+     x-data="sidebarMenu()"
+     @keydown.window.escape="closeSidebar">
+    <!-- Off-canvas menu for mobile -->
+    <div th:replace="fragments/sidebar-menu :: mobile"></div>
+
+    <!-- Static sidebar for desktop -->
+    <div th:replace="fragments/sidebar-menu :: desktop"></div>
+
+    <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <div th:replace="fragments/top-menu :: menu"></div>
+
+        <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
+            <div layout:fragment="page-content">
+            </div>
+        </main>
+    </div>
+</div>
+<div layout:fragment="modals-content">
+</div>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.js" defer></script>
+<script th:src="@{/js/user-popup-menu.js}"></script>
+<script>
+    function sidebarMenu() {
+        return {
+            show: false,
+            openSidebar() {
+                this.show = true;
+            },
+            closeSidebar() {
+                this.show = false;
+            },
+            isVisible() {
+                return this.show === true;
+            }
+        };
+    }
+</script>
+<!-- tag::date-picker-js[] -->
+<script>
+    const picker = document.querySelector('duet-date-picker');
+
+    if(picker) {
+        picker.dateAdapter = {
+            parse(value = '', createDate) { // <.>
+                try {
+                    let fromFormat = luxon.DateTime.fromFormat(value, 'yyyy-LL-dd');
+                    if (fromFormat.isValid) {
+                        return createDate(fromFormat.year, fromFormat.month, fromFormat.day);
+                    } else {
+                        console.log('fromFormat not valid');
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+            format(date) { // <.>
+                var DateTime = luxon.DateTime;
+                return DateTime.fromJSDate(date) // <.>
+                        .setLocale('[[${#strings.replace(#locale, '_', '-')}]]') // <.>
+                        .toFormat('d LLLL yyyy'); // <.>
+            },
+        };
+    }
+</script>
+<!-- end::date-picker-js[] -->
+<th:block layout:fragment="page-scripts">
+</th:block>
+</body>
+</html>
