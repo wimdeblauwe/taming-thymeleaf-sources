@@ -2,7 +2,7 @@
 
 These are the sources for the book 'Taming Thymleaf' which is available at https://leanpub.com/taming-thymeleaf
 
-![Taming Thymeleaf cover](cover 3D.png)
+![Taming Thymeleaf cover](cover-3D.png)
 
 Each directory matches with how the code is suppose to look like by the end of each chapter in the book.
 
