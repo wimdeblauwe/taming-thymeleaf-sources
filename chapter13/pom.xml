@@ -23,12 +23,12 @@
         <javafaker.version>1.0.2</javafaker.version>
 
         <!-- Maven plugins -->
-        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
-		<frontend-maven-plugin.nodeVersion>v14.7.0</frontend-maven-plugin.nodeVersion>
-		<frontend-maven-plugin.npmVersion>6.14.7</frontend-maven-plugin.npmVersion>
+		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.nodeVersion>v14.7.0</frontend-maven-plugin.nodeVersion>
+        <frontend-maven-plugin.npmVersion>6.14.11</frontend-maven-plugin.npmVersion>
         <testcontainers.version>1.15.0</testcontainers.version>
         <guava.version>29.0-jre</guava.version>
-    </properties>
+	</properties>
 
 	<build>
 		<resources>
@@ -97,7 +97,7 @@
 		</plugins>
 	</build>
 
-    <profiles>
+	<profiles>
 		<profile>
 			<id>release</id>
 			<build>

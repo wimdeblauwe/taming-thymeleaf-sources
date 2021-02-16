@@ -22,8 +22,10 @@ public class TamingThymeleafApplicationConfiguration {
         return resolver;
     }
 
+    // tag::uniqueIdGenerator[]
     @Bean
     public UniqueIdGenerator<UUID> uniqueIdGenerator() {
         return new InMemoryUniqueIdGenerator();
     }
+    // end::uniqueIdGenerator[]
 }

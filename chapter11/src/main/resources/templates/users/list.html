@@ -10,7 +10,8 @@
 <body>
 <div layout:fragment="page-content">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
+        <h1 class="text-2xl font-semibold text-gray-900"
+            th:text="#{users.title}">Users</h1>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
@@ -21,10 +22,10 @@
                             <thead>
                             <!-- tag::tr[] -->
                             <tr>
-                                <th th:replace="fragments/table :: header('Name')"></th>
-                                <th th:replace="fragments/table :: header(title='Gender',hideOnMobile=true)"></th>
-                                <th th:replace="fragments/table :: header(title='Birthday',hideOnMobile=true)"></th>
-                                <th th:replace="fragments/table :: header(title='Email',hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(#{user.name})"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.gender},hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.birthday},hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.email},hideOnMobile=true)"></th>
                                 <th th:replace="fragments/table :: header('')"></th>
                             </tr>
                             <!-- end::tr[] -->

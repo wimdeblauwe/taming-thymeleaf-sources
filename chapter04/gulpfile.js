@@ -27,14 +27,9 @@ gulp.task('copy-html', () =>
 
 gulp.task('copy-css', () =>
     gulp.src(['src/main/resources/**/*.css'])
-        .pipe(postcss([
-            require('tailwindcss'),
-            require('autoprefixer'),
-        ]))
+        .pipe(postcss())
         .pipe(production(purgecss({
-            content: ['src/main/resources/templates/**/*.html'],
-            // See https://tailwindui.com/documentation#update-your-purgecss-configuration
-            defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
+            content: ['src/main/resources/templates/**/*.html']
         })))
         .pipe(production(uglifycss()))
         .pipe(gulp.dest('target/classes/'))

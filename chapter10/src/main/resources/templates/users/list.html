@@ -22,10 +22,10 @@
                             <thead>
                             <!-- tag::tr[] -->
                             <tr>
-                                <th th:replace="fragments/table :: header('Name')"></th>
-                                <th th:replace="fragments/table :: header(title='Gender',hideOnMobile=true)"></th>
-                                <th th:replace="fragments/table :: header(title='Birthday',hideOnMobile=true)"></th>
-                                <th th:replace="fragments/table :: header(title='Email',hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(#{user.name})"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.gender},hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.birthday},hideOnMobile=true)"></th>
+                                <th th:replace="fragments/table :: header(title=#{user.email},hideOnMobile=true)"></th>
                                 <th th:replace="fragments/table :: header('')"></th>
                             </tr>
                             <!-- end::tr[] -->

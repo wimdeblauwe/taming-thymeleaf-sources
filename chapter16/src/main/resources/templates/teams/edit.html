@@ -26,19 +26,19 @@
                       enctype="multipart/form-data">
                     <div>
                         <div th:replace="fragments/forms :: fielderrors"></div>
-                        <div class="grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
+                        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}">
 
                             <div th:replace="fragments/forms :: textinput(#{team.name}, 'name', 'sm:col-span-3')"></div>
                             <div class="sm:col-span-3"></div>
                             <!-- tag::coach-select[] -->
                             <div class="sm:col-span-3">
-                                <label for="coachId" class="block text-sm font-medium leading-5 text-gray-700"
+                                <label for="coachId" class="block text-sm font-medium text-gray-700"
                                        th:text="#{team.coach}">
                                 </label>
                                 <div class="mt-1 rounded-md shadow-sm">
                                     <select th:field="*{coachId}"
-                                            class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                            class="max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md">
                                         <option th:each="user : ${users}"
                                                 th:text="${user.userName.fullName}"
                                                 th:value="${user.id.asString()}">
@@ -53,13 +53,12 @@
                                 <div id="teamplayer-forms"
                                      th:data-teamplayers-count="${team.players.length}"> <!--.-->
                                     <th:block th:each="player, iter : ${team.players}">
-                                        <div th:replace="teams/edit-teamplayer-fragment :: teamplayer-form(index=${iter.index}, teamObjectName='team')"></div>
-                                        <!--.-->
+                                        <div th:replace="teams/edit-teamplayer-fragment :: teamplayer-form(index=${iter.index}, teamObjectName='team')"></div> <!--.-->
                                     </th:block>
                                 </div>
                                 <div class="mt-4">
                                     <a href="#"
-                                       class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
+                                       class="py-2 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800"
                                        id="add-extra-teamplayer-form-button"
                                        th:text="#{team.player.add.extra}"
                                        @click="addExtraTeamPlayerForm()"
@@ -73,7 +72,7 @@
                         <div class="flex justify-end">
       <span class="inline-flex rounded-md shadow-sm">
         <button type="button"
-                class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 th:text="#{cancel}">
           Cancel
         </button>
@@ -81,7 +80,7 @@
                             <span class="ml-3 inline-flex rounded-md shadow-sm">
         <button id="submit-button"
                 type="submit"
-                class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
+                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                 th:text="${editMode?.name() == 'UPDATE'}?#{save}:#{create}">
           Save
         </button>
@@ -106,14 +105,6 @@
                         teamPlayerForms.setAttribute('data-teamplayers-count', parseInt(count) + 1); // <.>
                     });
         }
-
-        <!-- tag::removeTeamPlayerForm[] -->
-        function removeTeamPlayerForm(formIndex) {
-            const teamplayerForm = document.getElementById('teamplayer-form-section-' + formIndex);
-            teamplayerForm.parentElement.removeChild(teamplayerForm);
-        }
-
-        <!-- end::removeTeamPlayerForm[] -->
 
         function htmlToElement(html) {
             const template = document.createElement('template');

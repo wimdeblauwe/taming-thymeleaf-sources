@@ -5,26 +5,28 @@
 <!--/*@thymesVar id="menuItem" type="java.lang.String"*/-->
 <!--/*@thymesVar id="activeMenuItem" type="java.lang.String"*/-->
 
+<!-- tag::mobile-button[] -->
 <a th:fragment="mobile-button(link, title, menuItem, icon)"
    th:href="${link}"
-   class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md focus:outline-none transition ease-in-out duration-150"
-   th:classappend="${activeMenuItem == menuItem}? 'text-gray-900 bg-gray-100 focus:bg-gray-200' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 focus:text-gray-900 focus:bg-gray-100'"
+   class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+   th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
 >
-    <div class="mr-4 h-6 w-6 group-hover:text-gray-500 transition ease-in-out duration-150"
-         th:classappend="${activeMenuItem == menuItem}?'text-gray-500 group-focus:text-gray-600':'text-gray-400 group-focus:text-gray-500'">
+    <div class="mr-4 h-6 w-6"
+         th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
         <svg th:replace="${icon}"></svg>
     </div>
     [[${title}]]
 </a>
+<!-- end::mobile-button[] -->
 
 <!-- tag::desktop-button[] -->
 <a th:fragment="desktop-button(link, title, menuItem, icon)"
    th:href="${link}"
-   class="mt-1 group flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md hover:text-gray-900 focus:outline-none transition ease-in-out duration-150"
-   th:classappend="${activeMenuItem == menuItem}? 'text-gray-900 bg-gray-100 hover:bg-gray-100 focus:bg-gray-200' : 'text-gray-600 hover:bg-gray-50 focus:bg-gray-100'"
+   class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+   th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
 >
-    <div class="mr-3 h-6 w-6 group-hover:text-gray-500 transition ease-in-out duration-150"
-         th:classappend="${activeMenuItem == menuItem}?'text-gray-500 group-focus:text-gray-600':'text-gray-400 group-focus:text-gray-500'">
+    <div class="mr-3 h-6 w-6"
+         th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
         <svg th:replace="${icon}"></svg>
     </div>
     [[${title}]]

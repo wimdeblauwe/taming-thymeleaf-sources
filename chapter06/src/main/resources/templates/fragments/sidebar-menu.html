@@ -6,7 +6,7 @@
         <!--
           Off-canvas menu overlay
         -->
-        <div class="fixed inset-0"
+        <div class="fixed inset-0" aria-hidden="true"
              x-show="isVisible()"
              x-transition:enter="transition-opacity ease-linear duration-300"
              x-transition:enter-start="opacity-0"
@@ -19,7 +19,7 @@
         <!--
           Off-canvas menu
         -->
-        <div class="relative flex-1 flex flex-col max-w-xs w-full pt-4 pb-4 bg-white"
+        <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white"
              x-show="isVisible()"
              x-transition:enter="transition ease-in-out duration-300 transform"
              x-transition:enter-start="-translate-x-full"
@@ -27,16 +27,17 @@
              x-transition:leave="transition ease-in-out duration-300 transform"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="-translate-x-full">
-            <div class="absolute top-0 right-0 -mr-14 p-1">
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
                 <!--
                   Close sidebar menu button
                 -->
-                <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
-                        aria-label="Close sidebar"
+                <button class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         @click="closeSidebar">
-                    <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M6 18L18 6M6 6l12 12"/>
+                    <span class="sr-only">Close sidebar</span>
+                    <!-- Heroicon name: x -->
+                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
@@ -55,27 +56,30 @@
                 </nav>
             </div>
         </div>
-        <div class="flex-shrink-0 w-14">
+        <div class="flex-shrink-0 w-14" aria-hidden="true">
             <!-- Dummy element to force sidebar to shrink to fit close icon -->
         </div>
     </div>
 </div>
 <div th:fragment="desktop" class="hidden md:flex md:flex-shrink-0">
-    <div class="flex flex-col w-64 border-r border-gray-200 pt-4 pb-4 bg-white">
-        <div class="flex items-center flex-shrink-0 px-4">
-            <img class="h-auto w-auto"
-                 th:src="@{/img/application-logo.svg}" alt="Application Logo"/>
-        </div>
-        <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
-            <!-- Sidebar component, swap this element with another sidebar if you like -->
-            <nav class="flex-1 px-2 bg-white">
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Team', menuItem='team', icon='team')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Projects', menuItem='projects', icon='projects')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Documents', menuItem='documents', icon='documents')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Reports', menuItem='reports', icon='reports')"></a>
-            </nav>
+    <div class="flex flex-col w-64">
+        <div class="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
+            <div class="flex items-center flex-shrink-0 px-4">
+                <img class="h-auto w-auto"
+                     th:src="@{/img/application-logo.svg}" alt="Application Logo"/>
+            </div>
+            <div class="mt-5 flex-grow flex flex-col">
+                <!-- tag::desktop-nav[] -->
+                <nav class="flex-1 px-2 bg-white">
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')"></a>
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Team', menuItem='team', icon='team')"></a>
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Projects', menuItem='projects', icon='projects')"></a>
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')"></a>
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Documents', menuItem='documents', icon='documents')"></a>
+                    <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title='Reports', menuItem='reports', icon='reports')"></a>
+                </nav>
+                <!-- end::desktop-nav[] -->
+            </div>
         </div>
     </div>
 </div>

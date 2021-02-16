@@ -22,12 +22,12 @@
         <jpearl.version>0.3.0</jpearl.version>
 
         <!-- Maven plugins -->
-        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
+		<frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
         <frontend-maven-plugin.nodeVersion>v14.7.0</frontend-maven-plugin.nodeVersion>
-        <frontend-maven-plugin.npmVersion>6.14.7</frontend-maven-plugin.npmVersion>
+        <frontend-maven-plugin.npmVersion>6.14.11</frontend-maven-plugin.npmVersion>
         <testcontainers.version>1.15.0</testcontainers.version>
         <guava.version>29.0-jre</guava.version>
-    </properties>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -74,7 +74,7 @@
         </dependency>
 
 
-        <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
