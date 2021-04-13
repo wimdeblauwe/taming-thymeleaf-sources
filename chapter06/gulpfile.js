@@ -29,9 +29,6 @@ gulp.task('copy-html', () =>
 gulp.task('copy-css', () =>
     gulp.src(['src/main/resources/**/*.css'])
         .pipe(postcss())
-        .pipe(production(purgecss({
-            content: ['src/main/resources/templates/**/*.html']
-        })))
         .pipe(production(uglifycss()))
         .pipe(gulp.dest('target/classes/'))
 );

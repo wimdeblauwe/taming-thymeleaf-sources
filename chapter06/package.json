@@ -3,7 +3,7 @@
   "scripts": {
     "watch": "gulp watch",
     "build": "gulp build",
-    "build-prod": "gulp build --env production"
+    "build-prod": "NODE_ENV='production' gulp build --env production"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
