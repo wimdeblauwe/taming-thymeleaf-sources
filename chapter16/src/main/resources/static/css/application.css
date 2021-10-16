@@ -28,3 +28,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] {
+  display: none;
+}
+
+.application-logo {
+  width: 223px;
+  height: 36px;
+}
