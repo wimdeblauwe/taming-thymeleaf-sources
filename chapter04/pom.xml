@@ -77,10 +77,10 @@
 						<execution>
 							<id>run-gulp-build</id>
 							<goals>
-								<goal>gulp</goal>
+								<goal>npm</goal>
 							</goals>
 							<configuration>
-								<arguments>build</arguments>
+								<arguments>run build</arguments>
 							</configuration>
 						</execution>
 					</executions>
@@ -110,10 +110,10 @@
 							<execution>
 								<id>run-gulp-build</id>
 								<goals>
-									<goal>gulp</goal>
+									<goal>npm</goal>
 								</goals>
 								<configuration>
-									<arguments>build --env production</arguments>
+									<arguments>run build-prod</arguments>
 								</configuration>
 							</execution>
 						</executions>
