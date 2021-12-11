@@ -43,7 +43,9 @@ gulp.task('copy-js', () =>
 gulp.task('copy-svg', () => gulp.src(['src/main/resources/**/*.svg'])
     .pipe(gulp.dest('target/classes/')));
 
-gulp.task('copy-html-and-reload', gulp.series('copy-html', reload));
+// When the HTML changes, we need to copy the CSS also because
+// the Tailwind CSS JIT compiler might generate new CSS
+gulp.task('copy-html-and-reload', gulp.series('copy-html', 'copy-css', reload));
 gulp.task('copy-css-and-reload', gulp.series('copy-css', reload));
 gulp.task('copy-js-and-reload', gulp.series('copy-js', reload));
 gulp.task('copy-svg-and-reload', gulp.series('copy-svg', reload));
