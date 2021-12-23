@@ -15,7 +15,7 @@ gulp.task('watch', () => {
         proxy: 'localhost:8080',
     });
 
-    gulp.watch(['src/main/resources/**/*.html'], gulp.series('copy-html-and-reload'));
+    gulp.watch(['src/main/resources/**/*.html'], gulp.series('copy-html+css-and-reload'));
     gulp.watch(['src/main/resources/**/*.css'], gulp.series('copy-css-and-reload'));
     gulp.watch(['src/main/resources/**/*.js'], gulp.series('copy-js-and-reload'));
 });
@@ -39,7 +39,9 @@ gulp.task('copy-js', () =>
         .pipe(gulp.dest('target/classes/'))
 );
 
-gulp.task('copy-html-and-reload', gulp.series('copy-html', reload));
+// When the HTML changes, we need to copy the CSS also because
+// the Tailwind CSS JIT compiler might generate new CSS
+gulp.task('copy-html+css-and-reload', gulp.series('copy-html', 'copy-css', reload));
 gulp.task('copy-css-and-reload', gulp.series('copy-css', reload));
 gulp.task('copy-js-and-reload', gulp.series('copy-js', reload));
 

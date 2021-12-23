@@ -5,15 +5,11 @@
     "build": "gulp build",
     "build-prod": "NODE_ENV='production' gulp build --env production"
   },
-  "dependencies": {
-    "@tailwindcss/forms": "^0.2.1",
-    "autoprefixer": "^10.2.3",
-    "postcss": "^8.2.4",
-    "tailwindcss": "^2.0.2"
-  },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@tailwindcss/forms": "^0.4.0",
+    "autoprefixer": "^10.4.0",
     "browser-sync": "^2.26.14",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -22,6 +18,8 @@
     "gulp-purgecss": "^4.0.0",
     "gulp-terser": "^2.0.1",
     "gulp-uglifycss": "^1.1.0",
-    "gulp-watch": "^5.0.1"
+    "gulp-watch": "^5.0.1",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.1"
   }
 }

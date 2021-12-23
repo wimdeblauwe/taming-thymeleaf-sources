@@ -9,8 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicContainer;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -33,8 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
 @ActiveProfiles("integration-test")
 public class CypressE2eTests {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CypressE2eTests.class);
-
     @Container
     private static final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer<>("postgres:12")
             .withDatabaseName("tamingthymeleafdb")
@@ -84,12 +80,7 @@ public class CypressE2eTests {
     private void createContainerFromSuite(List<DynamicContainer> dynamicContainers, CypressTestSuite suite) {
         List<DynamicTest> dynamicTests = new ArrayList<>();
         for (CypressTest test : suite.getTests()) {
-            dynamicTests.add(DynamicTest.dynamicTest(test.getDescription(), () -> {
-                if(!test.isSuccess()) {
-                    LOGGER.error(test.getErrorMessage() + "\n " + test.getStackTrace());
-                }
-                assertTrue(test.isSuccess());
-            }));
+            dynamicTests.add(DynamicTest.dynamicTest(test.getDescription(), () -> assertTrue(test.isSuccess())));
         }
         dynamicContainers.add(DynamicContainer.dynamicContainer(suite.getTitle(), dynamicTests));
     }

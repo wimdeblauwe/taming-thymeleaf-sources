@@ -59,7 +59,7 @@ public class CypressE2eTests {
     List<DynamicContainer> runTests() throws InterruptedException, IOException, TimeoutException { //<.>
         // Ensure that the Cypress container can access the Spring Boot app running on port `port` via `host.testcontainers.internal`
         org.testcontainers.Testcontainers.exposeHostPorts(port);
-        try (CypressContainer container = new CypressContainer("cypress/included:5.1.0")
+        try (CypressContainer container = new CypressContainer()
                 .withLocalServerPort(port)) {
             container.start();
             CypressTestResults testResults = container.getTestResults();

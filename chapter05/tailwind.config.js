@@ -1,19 +1,14 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: {
-        content: ['./src/main/resources/templates/**/*.html']
-    },
-    darkMode: false, // or 'media' or 'class'
+    content: ['./src/main/resources/templates/**/*.html',
+        './src/main/resources/templates/**/*.svg'], <!--.-->
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Inter var', ...defaultTheme.fontFamily.sans],
             },
         }
-    },
-    variants: {
-        extend: {},
     },
     plugins: [
         require('@tailwindcss/forms')

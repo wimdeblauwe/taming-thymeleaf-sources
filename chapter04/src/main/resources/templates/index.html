@@ -24,6 +24,7 @@
             -->
             <div class="fixed inset-0" aria-hidden="true"
                  x-show="isVisible()"
+                 x-cloak
                  x-transition:enter="transition-opacity ease-linear duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"
@@ -37,6 +38,7 @@
             -->
             <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white"
                  x-show="isVisible()"
+                 x-cloak
                  x-transition:enter="transition ease-in-out duration-300 transform"
                  x-transition:enter-start="-translate-x-full"
                  x-transition:enter-end="translate-x-0"
@@ -219,6 +221,7 @@
                         -->
                         <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu"
                              x-show="isVisible()"
+                             x-cloak
                              x-transition:enter="transition ease-out duration-100 transform"
                              x-transition:enter-start="opacity-0 scale-95"
                              x-transition:enter-end="opacity-100 scale-100"
@@ -253,7 +256,7 @@
         </main>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.js" defer></script>
+<script src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js" defer></script>
 <script>
 
     function sidebarMenu() {
