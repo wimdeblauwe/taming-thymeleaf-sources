@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+      lang="en"
+      class="h-full bg-gray-100">
 <head>
     <meta charset="UTF-8">
     <title>Taming Thymeleaf</title>
@@ -11,47 +12,34 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
-<body>
-<div class="h-screen flex overflow-hidden bg-gray-100"
-     x-data="sidebarMenu()"
+<body class="h-full">
+<div x-data="sidebarMenu()"
      @keydown.window.escape="closeSidebar">
-    <!-- Off-canvas menu for mobile -->
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div th:replace="fragments/sidebar-menu :: mobile"></div>
 
     <!-- Static sidebar for desktop -->
     <div th:replace="fragments/sidebar-menu :: desktop"></div>
 
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <div class="flex flex-1 flex-col lg:pl-64">
         <div th:replace="fragments/top-menu :: menu"></div>
 
-        <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Dashboard
-                </h1>
-            </div>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <!-- Replace with your content -->
-                <div class="py-4">
-                    <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">
-                        <div></div>
-                    </div>
+        <main class="flex-1">
+            <div class="py-6">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
                 </div>
-                <!-- /End replace -->
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <!-- Your content -->
+                </div>
             </div>
         </main>
     </div>
 </div>
-<script src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js" defer></script>
-<!--
-  This is how you import the JavaScript as a Thymeleaf fragment
-<script th:replace="fragments/top-menu :: user-popup-menu-js"></script>
--->
-
-<!--
-  This is the JavaScript referenced from an external file
--->
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
 <script th:src="@{/js/user-popup-menu.js}"></script>
 <script>
+
     function sidebarMenu() {
         return {
             show: false,
