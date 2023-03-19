@@ -1,25 +1,36 @@
 {
-  "name": "taming-thymeleaf-app",
-  "scripts": {
-    "watch": "gulp watch",
-    "build": "gulp build",
-    "build-prod": "NODE_ENV='production' gulp build --env production"
-  },
+  "name": "taming-thymeleaf-application",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "@tailwindcss/forms": "^0.4.0",
-    "autoprefixer": "^10.4.0",
-    "browser-sync": "^2.26.14",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-environments": "^1.0.1",
-    "gulp-postcss": "^9.0.0",
-    "gulp-purgecss": "^4.0.0",
-    "gulp-terser": "^2.0.1",
-    "gulp-uglifycss": "^1.1.0",
-    "gulp-watch": "^5.0.1",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.7"
+    "@babel/cli": "^7.21.0",
+    "@tailwindcss/forms": "^0.5.3",
+    "autoprefixer": "^10.4.14",
+    "browser-sync": "^2.28.3",
+    "cssnano": "^5.1.15",
+    "mkdirp": "^2.1.5",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "path-exists-cli": "^2.0.0",
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0",
+    "recursive-copy-cli": "^1.0.20",
+    "tailwindcss": "^3.2.7"
+  },
+  "scripts": {
+    "build": "npm-run-all --parallel build:*",
+    "build:html": "recursive-copy \"src/main/resources/templates\" target/classes/templates -w",
+    "build:css": "mkdirp target/classes/static/css && postcss src/main/resources/static/css/*.css -d target/classes/static/css",
+    "build:js": "path-exists src/main/resources/static/js && (mkdirp target/classes/static/js && babel src/main/resources/static/js/ --out-dir target/classes/static/js/) || echo \"No 'src/main/resources/static/js' directory found.\"",
+    "build:svg": "path-exists src/main/resources/static/svg && recursive-copy \"src/main/resources/static/svg\" target/classes/static/svg -w -f \"**/*.svg\" || echo \"No 'src/main/resources/static/svg' directory found.\"",
+    "build-prod": "NODE_ENV='production' npm-run-all --parallel build-prod:*",
+    "build-prod:html": "npm run build:html",
+    "build-prod:css": "npm run build:css",
+    "build-prod:js": "path-exists src/main/resources/static/js && (mkdirp target/classes/static/js && babel src/main/resources/static/js/ --minified --out-dir target/classes/static/js/) || echo \"No 'src/main/resources/static/js' directory found.\"",
+    "build-prod:svg": "npm run build:svg",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:html": "onchange \"src/main/resources/templates/**/*.html\" -- npm-run-all --serial build:css build:html",
+    "watch:css": "onchange \"src/main/resources/static/css/**/*.css\" -- npm run build:css",
+    "watch:js": "onchange \"src/main/resources/static/js/**/*.js\" -- npm run build:js",
+    "watch:svg": "onchange \"src/main/resources/static/svg/**/*.svg\" -- npm run build:svg",
+    "watch:serve": "browser-sync start --no-inject-changes --proxy localhost:8080 --files \"target/classes/templates\" \"target/classes/static\""
   }
 }

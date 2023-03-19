@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en">
+      lang="en"
+      class="h-full bg-gray-100">
 <head>
     <meta charset="UTF-8">
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Taming Thymeleaf</title> <!--1-->
@@ -12,28 +13,30 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
-<body>
-<div class="h-screen flex overflow-hidden bg-gray-100"
-     x-data="sidebarMenu()"
+<body class="h-full">
+<div x-data="sidebarMenu()"
      @keydown.window.escape="closeSidebar">
-    <!-- Off-canvas menu for mobile -->
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div th:replace="fragments/sidebar-menu :: mobile"></div>
 
     <!-- Static sidebar for desktop -->
     <div th:replace="fragments/sidebar-menu :: desktop"></div>
 
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <div class="flex flex-1 flex-col lg:pl-64">
         <div th:replace="fragments/top-menu :: menu"></div>
 
-        <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-            <div layout:fragment="page-content"> <!--2-->
+        <main class="flex-1">
+            <div class="py-6">
+                <div layout:fragment="page-content"> <!--2-->
+                </div>
             </div>
         </main>
     </div>
 </div>
-<script src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js" defer></script>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
 <script th:src="@{/js/user-popup-menu.js}"></script>
 <script>
+
     function sidebarMenu() {
         return {
             show: false,

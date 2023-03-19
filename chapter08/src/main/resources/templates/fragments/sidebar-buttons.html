@@ -8,10 +8,10 @@
 <!-- tag::mobile-button[] -->
 <a th:fragment="mobile-button(link, title, menuItem, icon)"
    th:href="${link}"
-   class="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+   class="group flex items-center rounded-md px-2 py-2 text-base font-medium"
    th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
 >
-    <div class="mr-4 h-6 w-6"
+    <div class="mr-4 h-6 w-6 flex-shrink-0"
          th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
         <svg th:replace="${icon}"></svg>
     </div>
@@ -22,14 +22,15 @@
 <!-- tag::desktop-button[] -->
 <a th:fragment="desktop-button(link, title, menuItem, icon)"
    th:href="${link}"
-   class="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+   class="group flex items-center rounded-md px-2 py-2 text-sm font-medium"
    th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
 >
-    <div class="mr-3 h-6 w-6"
+    <div class="mr-3 h-6 w-6 flex-shrink-0"
          th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
         <svg th:replace="${icon}"></svg>
     </div>
     [[${title}]]
 </a>
 <!-- end::desktop-button[] -->
+
 </html>
