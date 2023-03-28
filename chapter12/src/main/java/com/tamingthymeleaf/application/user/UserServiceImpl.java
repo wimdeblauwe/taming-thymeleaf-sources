@@ -56,8 +56,10 @@ public class UserServiceImpl implements UserService {
         return repository.existsByEmail(email);
     }
 
+    // tag::getUser[]
     @Override
     public Optional<User> getUser(UserId userId) {
         return repository.findById(userId);
     }
+    // end::getUser[]
 }

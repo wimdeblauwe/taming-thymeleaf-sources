@@ -55,12 +55,12 @@
                             <!-- end::gender[] -->
 
                             <!-- tag::textinputs[] -->
-                            <div th:replace="fragments/forms :: textinput(#{user.firstName}, 'firstName', 'sm:col-span-3')"></div>
-                            <div th:replace="fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')"></div>
-                            <div th:replace="fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')"></div>
-                            <div th:replace="fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.firstName}, 'firstName', 'sm:col-span-3')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')}"></div>
                             <div class="sm:col-span-2"></div>
-                            <div th:replace="fragments/forms :: textinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2', placeholder=#{user.birthday.placeholder})"></div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2', placeholder=#{user.birthday.placeholder})}"></div>
                             <!-- end::textinputs[] -->
                         </div>
                     </div>

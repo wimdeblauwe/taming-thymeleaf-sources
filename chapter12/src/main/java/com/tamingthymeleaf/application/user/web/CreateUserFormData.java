@@ -8,7 +8,7 @@ import com.tamingthymeleaf.application.user.PhoneNumber;
 import com.tamingthymeleaf.application.user.UserName;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @NotExistingUser(groups = ValidationGroupTwo.class)
