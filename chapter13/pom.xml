@@ -1,138 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.tamingthymeleaf</groupId>
-	<artifactId>taming-thymeleaf-application</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.tamingthymeleaf</groupId>
+    <artifactId>taming-thymeleaf-application</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 	<name>Taming Thymeleaf 13.03</name>
-	<description>Example application for the Taming Thymeleaf book</description>
+    <description>Example application for the Taming Thymeleaf book</description>
 
-	<properties>
-		<java.version>17</java.version>
+    <properties>
+        <java.version>17</java.version>
 
         <!-- Dependencies -->
-        <jpearl.version>1.1.0</jpearl.version>
+        <jpearl.version>2.0.0</jpearl.version>
+        <guava.version>31.0.1-jre</guava.version>
         <javafaker.version>1.0.2</javafaker.version>
 
+        <!-- Test dependencies -->
+        <testcontainers.version>1.17.6</testcontainers.version>
+
         <!-- Maven plugins -->
-        <frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
-        <frontend-maven-plugin.nodeVersion>v16.13.1</frontend-maven-plugin.nodeVersion>
-        <frontend-maven-plugin.npmVersion>8.1.2</frontend-maven-plugin.npmVersion>
-        <testcontainers.version>1.16.2</testcontainers.version>
-        <guava.version>31.0.1-jre</guava.version>
-	</properties>
-
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>**/*.html</exclude>
-					<exclude>**/*.css</exclude>
-					<exclude>**/*.js</exclude>
-                    <exclude>**/*.svg</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.github.eirslett</groupId>
-					<artifactId>frontend-maven-plugin</artifactId>
-					<version>${frontend-maven-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>install-frontend-tooling</id>
-							<goals>
-								<goal>install-node-and-npm</goal>
-							</goals>
-							<configuration>
-								<nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
-								<npmVersion>${frontend-maven-plugin.npmVersion}</npmVersion>
-							</configuration>
-						</execution>
-						<execution>
-							<id>run-npm-install</id>
-							<goals>
-								<goal>npm</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>run-gulp-build</id>
-							<goals>
-								<goal>npm</goal>
-							</goals>
-							<configuration>
-								<arguments>run build</arguments>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-                <plugin>
-                    <groupId>io.github.wimdeblauwe</groupId>
-                    <artifactId>jpearl-maven-plugin</artifactId>
-                    <version>${jpearl.version}</version>
-                    <configuration>
-                        <basePackage>com.tamingthymeleaf.application</basePackage>
-                    </configuration>
-                </plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
-	<profiles>
-		<profile>
-			<id>release</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.github.eirslett</groupId>
-						<artifactId>frontend-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>run-gulp-build</id>
-								<goals>
-									<goal>npm</goal>
-								</goals>
-								<configuration>
-									<arguments>run build-prod</arguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+        <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
+        <frontend-maven-plugin.nodeVersion>v18.15.0</frontend-maven-plugin.nodeVersion>
+        <frontend-maven-plugin.npmVersion>9.5.0</frontend-maven-plugin.npmVersion>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
-            <groupId>nz.net.ultraq.thymeleaf</groupId>
-            <artifactId>thymeleaf-layout-dialect</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -156,30 +65,34 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-        <!-- tag::javafaker[] -->
-        <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>${javafaker.version}</version>
-        </dependency>
-        <!-- end::javafaker[] -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
+        </dependency>
 
+        <!-- Web dependencies -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.46</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>alpinejs</artifactId>
+            <version>3.11.1</version>
+        </dependency>
 
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -194,4 +107,97 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.html</exclude>
+                    <exclude>**/*.css</exclude>
+                    <exclude>**/*.js</exclude>
+                    <exclude>**/*.svg</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>install-frontend-tooling</id>
+                            <goals>
+                                <goal>install-node-and-npm</goal>
+                            </goals>
+                            <configuration>
+                                <nodeVersion>${frontend-maven-plugin.nodeVersion}</nodeVersion>
+                                <npmVersion>${frontend-maven-plugin.npmVersion}</npmVersion>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>run-npm-install</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>run-npm-build</id>
+                            <goals>
+                                <goal>npm</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>run build</arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.github.wimdeblauwe</groupId>
+                    <artifactId>jpearl-maven-plugin</artifactId>
+                    <version>${jpearl.version}</version>
+                    <configuration>
+                        <basePackage>com.tamingthymeleaf.application</basePackage>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-npm-build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build-prod</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

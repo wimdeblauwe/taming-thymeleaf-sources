@@ -6,7 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.UUID;
@@ -30,9 +30,9 @@ public class TamingThymeleafApplicationConfiguration {
     }
 
     @Bean
-    public LocalValidatorFactoryBean localValidatorFactoryBean(MessageSource messageSource) {
+    public LocalValidatorFactoryBean localValidatorFactoryBean(MessageSource messageSource) { //<.>
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-        bean.setValidationMessageSource(messageSource);
+        bean.setValidationMessageSource(messageSource); //<.>
         return bean;
     }
 }
