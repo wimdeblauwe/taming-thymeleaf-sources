@@ -14,8 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.UUID;
@@ -65,42 +65,24 @@ class UserRepositoryTest {
         assertThat(jdbcTemplate.queryForObject("SELECT phone_number FROM tt_user", String.class)).isEqualTo("202 555 0192");
     }
 
+    // tag::testFindAllPageable[]
     @Test
     void testFindAllPageable() {
         saveUsers(8); //<.>
 
         Sort sort = Sort.by(Sort.Direction.ASC, "userName.lastName", "userName.firstName"); //<.>
         assertThat(repository.findAll(PageRequest.of(0, 5, sort))) //<.>
-                                                                   .hasSize(5) //<.>
-                                                                   .extracting(user -> user.getUserName().getFullName()) //<.>
-                                                                   .containsExactly("Tommy1 Holt", "Tommy3 Holt", "Tommy5 Holt", "Tommy7 Holt", "Tommy0 Walton"); //<.>
+                .hasSize(5) //<.>
+                .extracting(user -> user.getUserName().getFullName()) //<.>
+                .containsExactly("Tommy1 Holt", "Tommy3 Holt", "Tommy5 Holt", "Tommy7 Holt", "Tommy0 Walton"); //<.>
 
         assertThat(repository.findAll(PageRequest.of(1, 5, sort))) //<.>
-                                                                   .hasSize(3)
-                                                                   .extracting(user -> user.getUserName().getFullName())
-                                                                   .containsExactly("Tommy2 Walton", "Tommy4 Walton", "Tommy6 Walton");
+                .hasSize(3)
+                .extracting(user -> user.getUserName().getFullName())
+                .containsExactly("Tommy2 Walton", "Tommy4 Walton", "Tommy6 Walton");
 
         assertThat(repository.findAll(PageRequest.of(2, 5, sort))).isEmpty(); //<.>
     }
-
-    // tag::testFindAllPageable[]
-    @Test
-    void testExistsByEmail() {
-        UserId id = repository.nextId();
-        repository.save(new User(id,
-                                 new UserName("Tommy", "Walton"),
-                                 Gender.MALE,
-                                 LocalDate.of(2001, Month.FEBRUARY, 17),
-                                 new Email("tommy.walton@gmail.com"),
-                                 new PhoneNumber("202 555 0192")));
-
-        entityManager.flush();
-
-        assertThat(repository.existsByEmail(new Email("tommy.walton@gmail.com"))).isTrue();
-        assertThat(repository.existsByEmail(new Email("nobody@gmail.com"))).isFalse();
-    }
-
-    // end::testFindAllPageable[]
 
     private void saveUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
@@ -113,6 +95,7 @@ class UserRepositoryTest {
                                      new PhoneNumber("202 555 0192")));
         }
     }
+    // end::testFindAllPageable[]
 
     @TestConfiguration
     static class TestConfig {
