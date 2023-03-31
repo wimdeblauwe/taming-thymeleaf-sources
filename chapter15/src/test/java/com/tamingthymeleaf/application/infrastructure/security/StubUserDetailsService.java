@@ -12,20 +12,20 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class StubUserDetailsService implements UserDetailsService {
+public class StubUserDetailsService implements UserDetailsService { //<.>
     public static final String USERNAME_USER = "alanna.sparrow@hey.com";
     public static final String USERNAME_ADMIN = "gavin.joyce@gmail.com";
 
-    private final Map<String, ApplicationUserDetails> users = new HashMap<>();
+    private final Map<String, ApplicationUserDetails> users = new HashMap<>(); //<.>
 
-    public StubUserDetailsService(PasswordEncoder passwordEncoder) {
+    public StubUserDetailsService(PasswordEncoder passwordEncoder) { //<.>
         addUser(new ApplicationUserDetails(createUser(passwordEncoder)));
         addUser(new ApplicationUserDetails(createAdmin(passwordEncoder)));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return Optional.ofNullable(users.get(username))
+        return Optional.ofNullable(users.get(username)) //<.>
                        .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 

@@ -3,6 +3,7 @@ package com.tamingthymeleaf.application.user.web;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
 import com.tamingthymeleaf.application.infrastructure.security.StubUserDetailsService;
+import com.tamingthymeleaf.application.infrastructure.security.WebSecurityConfiguration;
 import com.tamingthymeleaf.application.user.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.io.IOException;
@@ -52,32 +54,32 @@ class UserControllerHtmlUnitTest {
     @WithUserDetails(USERNAME_ADMIN)
     void testGetUsersAsAdmin() throws Exception {
         when(userService.getUsers(any(Pageable.class)))
-                .thenReturn(new PageImpl<>(List.of(Users.createUser(new UserName("Kaden", "Whyte")),
-                                                   Users.createUser(new UserName("Charlton", "Faulkner")),
-                                                   Users.createUser(new UserName("Yuvaan", "Mcpherson"))
-                )));
+                                                        .thenReturn(new PageImpl<>(List.of(Users.createUser(new UserName("Kaden", "Whyte")),
+                                                                                           Users.createUser(new UserName("Charlton", "Faulkner")),
+                                                                                           Users.createUser(new UserName("Yuvaan", "Mcpherson"))
+                                                        )));
 
         HtmlPage htmlPage = webClient.getPage("/users");
         DomNodeList<DomElement> h1headers = htmlPage.getElementsByTagName("h1");
         assertThat(h1headers).hasSize(1)
                              .element(0)
-                             .extracting(DomElement::asText)
+                             .extracting(DomElement::asNormalizedText)
                              .isEqualTo("Users");
 
         HtmlTable usersTable = htmlPage.getHtmlElementById("users-table");
         List<HtmlTableRow> rows = usersTable.getRows();
 
-        HtmlTableRow headerRow = rows.get(0);
-        assertThat(headerRow.getCell(0).asText()).isEqualTo("Name");
-        assertThat(headerRow.getCell(1).asText()).isEqualTo("Gender");
-        assertThat(headerRow.getCell(2).asText()).isEqualTo("Birthday");
-        assertThat(headerRow.getCell(3).asText()).isEqualTo("Email");
+        HtmlTableRow headerRow = rows.get(0); //<.>
+        assertThat(headerRow.getCell(0).asNormalizedText()).isEqualTo("Name");
+        assertThat(headerRow.getCell(1).asNormalizedText()).isEqualTo("Gender");
+        assertThat(headerRow.getCell(2).asNormalizedText()).isEqualTo("Birthday");
+        assertThat(headerRow.getCell(3).asNormalizedText()).isEqualTo("Email");
 
-        HtmlTableRow row1 = rows.get(1);
-        assertThat(row1.getCell(0).asText()).isEqualTo("Kaden Whyte");
-        assertThat(row1.getCell(1).asText()).isEqualTo("FEMALE");
-        assertThat(row1.getCell(2).asText()).isEqualTo("2001-06-19");
-        assertThat(row1.getCell(3).asText()).isEqualTo("kaden.whyte@gmail.com");
+        HtmlTableRow row1 = rows.get(1); //<.>
+        assertThat(row1.getCell(0).asNormalizedText()).isEqualTo("Kaden Whyte");
+        assertThat(row1.getCell(1).asNormalizedText()).isEqualTo("FEMALE");
+        assertThat(row1.getCell(2).asNormalizedText()).isEqualTo("2001-06-19");
+        assertThat(row1.getCell(3).asNormalizedText()).isEqualTo("kaden.whyte@gmail.com");
     }
 
     // tag::test-add-user[]
@@ -90,7 +92,7 @@ class UserControllerHtmlUnitTest {
         HtmlPage htmlPage = webClient.getPage("/users");
         DomNodeList<DomElement> elements = htmlPage.getElementsByTagName("a");
         Optional<DomElement> createUserLink = elements.stream()
-                                                      .filter(domElement -> domElement.asText().equals("Add user"))
+                                                      .filter(domElement -> domElement.asNormalizedText().equals("Add user"))
                                                       .findFirst(); //<.>
         assertThat(createUserLink).isPresent();
 
@@ -100,7 +102,7 @@ class UserControllerHtmlUnitTest {
         DomNodeList<DomElement> h1headers = createUserFormPage.getElementsByTagName("h1");
         assertThat(h1headers).hasSize(1)
                              .element(0)
-                             .extracting(DomElement::asText)
+                             .extracting(DomElement::asNormalizedText)
                              .isEqualTo("Create user"); //<.>
 
         createUserFormPage.getElementById("gender-MALE").click(); //<.>
@@ -129,6 +131,7 @@ class UserControllerHtmlUnitTest {
     // end::test-add-user[]
 
     @TestConfiguration
+    @Import(WebSecurityConfiguration.class)
     static class TestConfig {
         @Bean
         public PasswordEncoder passwordEncoder() {

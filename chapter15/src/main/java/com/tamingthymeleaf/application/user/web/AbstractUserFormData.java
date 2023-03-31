@@ -6,7 +6,7 @@ import com.tamingthymeleaf.application.user.Gender;
 import com.tamingthymeleaf.application.user.UserRole;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @NotExistingUser(groups = ValidationGroupTwo.class)
