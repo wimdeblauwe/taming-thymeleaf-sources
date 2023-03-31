@@ -2,8 +2,8 @@ package com.tamingthymeleaf.application.user;
 
 import io.github.wimdeblauwe.jpearl.AbstractVersionedEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -39,12 +39,12 @@ public class User extends AbstractVersionedEntity<UserId> {
     // tag::constructors[]
     private User(UserId id,
                  Set<UserRole> roles,
-                 UserName userName,
+                UserName userName,
                  String password,
-                 Gender gender,
-                 LocalDate birthday,
-                 Email email,
-                 PhoneNumber phoneNumber) {
+                Gender gender,
+                LocalDate birthday,
+                Email email,
+                PhoneNumber phoneNumber) {
         super(id);
         this.roles = roles;
         this.userName = userName;

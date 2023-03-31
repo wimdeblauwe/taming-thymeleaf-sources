@@ -66,7 +66,7 @@
 
                 <!-- tag::pagenumbers[] -->
                 <th:block
-                        th:with="startPage=${T(Math).max(1, page.getNumber() - 1)},endPage=${T(Math).min(startPage + 4, page.getTotalPages())}">
+                        th:with="startPage=${T(java.lang.Math).max(1, page.getNumber() - 1)},endPage=${T(java.lang.Math).min(startPage + 4, page.getTotalPages())}">
                     <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
                        th:id="${'pagination-page-' + pageNumber}"
                        th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', pageNumber - 1).toUriString()}"

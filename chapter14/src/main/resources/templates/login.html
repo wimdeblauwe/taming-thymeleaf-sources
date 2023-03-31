@@ -18,17 +18,17 @@
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <div class="sm:mx-auto sm:w-full sm:max-w-md mb-6">
                 <img class="mx-auto h-12 w-auto"
-                     th:src="@{/img/application-logo.svg}" alt="Application Logo"/>
+                     th:src="@{/svg/application-logo.svg}" alt="Application Logo"/>
             </div>
-            <form th:action="@{/login}" method="post"><!--.-->
+            <form th:action="@{/login}" method="post"> <!--.-->
                 <!-- tag::login-error[] -->
                 <th:block th:if="${param.error}"> <!--.-->
-                    <div th:replace="fragments/alerts :: error(message=#{login.error},useHorizontalPadding=false)"></div>
+                    <div th:replace="~{fragments/alerts :: error(message=#{login.error},useHorizontalPadding=false)}"></div>
                 </th:block>
                 <!-- end::login-error[] -->
                 <!-- tag::logout-confirmation[] -->
                 <th:block th:if="${param.logout}"> <!--.-->
-                    <div th:replace="fragments/alerts :: success(message=#{login.logout.confirmation},useHorizontalPadding=false)"></div>
+                    <div th:replace="~{fragments/alerts :: success(message=#{login.logout.confirmation},useHorizontalPadding=false)}"></div>
                 </th:block>
                 <!-- end::logout-confirmation[] -->
                 <div>
@@ -41,7 +41,7 @@
                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                type="text"
                                required
-                               name="username"><!--.-->
+                               name="username"> <!--.-->
                     </div>
                 </div>
 
@@ -55,7 +55,7 @@
                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                type="password"
                                required
-                               name="password"><!--.-->
+                               name="password"> <!--.-->
                     </div>
                 </div>
 
@@ -88,7 +88,7 @@
         </div>
     </div>
 </div>
-<script src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js" defer></script>
-<script th:replace="fragments/alerts :: alert-js"></script>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
+<script th:replace="~{fragments/alerts :: alert-js}"></script>
 </body>
 </html>

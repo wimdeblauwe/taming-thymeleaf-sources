@@ -5,7 +5,7 @@ import com.tamingthymeleaf.application.user.CreateUserParameters;
 import com.tamingthymeleaf.application.user.PhoneNumber;
 import com.tamingthymeleaf.application.user.UserName;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @PasswordsMatch(groups = ValidationGroupTwo.class) //<.>
 public class CreateUserFormData extends AbstractUserFormData {

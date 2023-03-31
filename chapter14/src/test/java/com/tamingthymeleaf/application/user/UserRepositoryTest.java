@@ -2,6 +2,8 @@ package com.tamingthymeleaf.application.user;
 
 import io.github.wimdeblauwe.jpearl.InMemoryUniqueIdGenerator;
 import io.github.wimdeblauwe.jpearl.UniqueIdGenerator;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.UUID;
@@ -130,7 +130,8 @@ class UserRepositoryTest {
         for (int i = 0; i < numberOfUsers; i++) {
             repository.save(User.createUser(repository.nextId(),
                                             new UserName(String.format("Tommy%d", i), i % 2 == 0 ? "Walton" : "Holt"),
-                                            "encoded-secret-pwd", Gender.MALE,
+                                            "encoded-secret-pwd",
+                                            Gender.MALE,
                                             LocalDate.of(2001, Month.FEBRUARY, 17),
                                             new Email("tommy.walton" + i +
                                                               "@gmail.com"),
