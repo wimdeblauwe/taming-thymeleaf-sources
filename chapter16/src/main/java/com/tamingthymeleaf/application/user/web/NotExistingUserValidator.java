@@ -4,8 +4,8 @@ import com.tamingthymeleaf.application.user.Email;
 import com.tamingthymeleaf.application.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class NotExistingUserValidator implements ConstraintValidator<NotExistingUser, AbstractUserFormData> { //<.>
 
@@ -20,7 +20,6 @@ public class NotExistingUserValidator implements ConstraintValidator<NotExisting
         // intentionally empty
     }
 
-    // tag::isValid[]
     public boolean isValid(AbstractUserFormData formData, ConstraintValidatorContext context) { //<.>
         if (userService.userWithEmailExists(new Email(formData.getEmail()))) {
             context.disableDefaultConstraintViolation();
@@ -33,5 +32,4 @@ public class NotExistingUserValidator implements ConstraintValidator<NotExisting
 
         return true;
     }
-    // end::isValid[]
 }

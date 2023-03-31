@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en">
+      lang="en"
+      class="h-full bg-gray-100">
 <!-- tag::duet[] -->
 <head>
     <meta charset="UTF-8">
@@ -10,38 +11,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.1.0/dist/duet/duet.esm.js"></script>
-    <script nomodule src="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.0.1/dist/duet/duet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@1.25.0/build/global/luxon.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.1.0/dist/duet/themes/default.css"/>
+    <script type="module" th:src="@{/webjars/duetds__date-picker/dist/duet/duet.esm.js}"></script>
+    <script nomodule th:src="@{/webjars/duetds__date-picker/dist/duet/duet.js}"></script>
+    <script th:src="@{/webjars/luxon/build/global/luxon.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/duetds__date-picker/dist/duet/themes/default.css}"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" th:href="@{/css/application.css}">
 </head>
 <!-- end::duet[] -->
-<body>
-<div class="h-screen flex overflow-hidden bg-gray-100"
-     x-data="sidebarMenu()"
+<body class="h-full">
+<div x-data="sidebarMenu()"
      @keydown.window.escape="closeSidebar">
-    <!-- Off-canvas menu for mobile -->
-    <div th:replace="fragments/sidebar-menu :: mobile"></div>
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+    <div th:replace="~{fragments/sidebar-menu :: mobile}"></div>
 
     <!-- Static sidebar for desktop -->
-    <div th:replace="fragments/sidebar-menu :: desktop"></div>
+    <div th:replace="~{fragments/sidebar-menu :: desktop}"></div>
 
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
-        <div th:replace="fragments/top-menu :: menu"></div>
+    <div class="flex flex-1 flex-col lg:pl-64">
+        <div th:replace="~{fragments/top-menu :: menu}"></div>
 
-        <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-            <div layout:fragment="page-content">
+        <main class="flex-1">
+            <div class="py-6">
+                <div layout:fragment="page-content">
+                </div>
             </div>
         </main>
     </div>
 </div>
 <div layout:fragment="modals-content">
 </div>
-<script src="https://unpkg.com/alpinejs@3.7.0/dist/cdn.min.js" defer></script>
+<script type="text/javascript" th:src="@{/webjars/alpinejs/dist/cdn.min.js}" defer></script>
 <script th:src="@{/js/user-popup-menu.js}"></script>
 <script>
+
     function sidebarMenu() {
         return {
             show: false,

@@ -3,8 +3,8 @@ package com.tamingthymeleaf.application.team;
 import com.tamingthymeleaf.application.user.User;
 import io.github.wimdeblauwe.jpearl.AbstractVersionedEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 

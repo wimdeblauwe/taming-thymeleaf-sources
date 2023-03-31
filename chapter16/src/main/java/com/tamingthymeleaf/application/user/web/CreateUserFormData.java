@@ -6,7 +6,7 @@ import com.tamingthymeleaf.application.user.Email;
 import com.tamingthymeleaf.application.user.PhoneNumber;
 import com.tamingthymeleaf.application.user.UserName;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @PasswordsMatch(groups = ValidationGroupTwo.class)
 public class CreateUserFormData extends AbstractUserFormData {
@@ -34,16 +34,16 @@ public class CreateUserFormData extends AbstractUserFormData {
     // tag::toParameters[]
     public CreateUserParameters toParameters() {
         CreateUserParameters parameters = new CreateUserParameters(new UserName(getFirstName(), getLastName()),
-                                                                   password,
-                                                                   getGender(),
-                                                                   getBirthday(),
+                                        password,
+                                        getGender(),
+                                        getBirthday(),
                                                                    new Email(getEmail()),
                                                                    getPhoneNumber());
 
         if (getAvatarFile() != null
                 && !getAvatarFile().isEmpty()) { //<.>
             parameters.setAvatar(getAvatarFile());
-        }
+    }
         return parameters;
     }
     // end::toParameters[]

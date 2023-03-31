@@ -8,7 +8,7 @@ import com.tamingthymeleaf.application.user.UserRole;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @NotExistingUser(groups = ValidationGroupTwo.class)

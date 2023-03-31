@@ -53,12 +53,12 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Creating administrator {} ({})", parameters.getUserName().getFullName(), parameters.getEmail().asString());
         UserId userId = repository.nextId();
         User user = User.createAdministrator(userId,
-                                             parameters.getUserName(),
+                             parameters.getUserName(),
                                              passwordEncoder.encode(parameters.getPassword()),
-                                             parameters.getGender(),
-                                             parameters.getBirthday(),
-                                             parameters.getEmail(),
-                                             parameters.getPhoneNumber());
+                             parameters.getGender(),
+                             parameters.getBirthday(),
+                             parameters.getEmail(),
+                             parameters.getPhoneNumber());
         storeAvatarIfPresent(parameters, user);
         return repository.save(user);
     }

@@ -4,7 +4,7 @@ import com.tamingthymeleaf.application.team.PlayerPosition;
 import com.tamingthymeleaf.application.team.TeamPlayer;
 import com.tamingthymeleaf.application.user.UserId;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class TeamPlayerFormData {
     @NotNull

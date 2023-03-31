@@ -18,20 +18,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
             <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-
                 <form id="user-form"
                       th:object="${user}"
                       th:action="${editMode?.name() == 'UPDATE'}?@{/users/{id}(id=${user.id})}:@{/users/create}"
                       method="post"
                       enctype="multipart/form-data">
                     <div>
-                        <div th:replace="fragments/forms :: fielderrors"></div>
+                        <div th:replace="~{fragments/forms :: fielderrors}"></div>
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}"> <!--.-->
                             <!-- tag::avatar[] -->
                             <div class="sm:col-span-6 flex flex-col items-center sm:flex-row sm:justify-start">
                                 <img id="avatarImage"
-                                     th:src="${editMode?.name() == 'UPDATE' && user.avatarBase64Encoded != null}?${'data:image/jpeg;base64,' + user.avatarBase64Encoded}:'/img/user.svg'"
+                                     th:src="${editMode?.name() == 'UPDATE' && user.avatarBase64Encoded != null}?${'data:image/jpeg;base64,' + user.avatarBase64Encoded}:'/svg/user.svg'"
                                      class="inline-block object-cover w-32 h-32 rounded-full overflow-hidden bg-gray-100 cursor-pointer"
                                      th:classappend="${editMode?.name() == 'UPDATE' && user.avatarBase64Encoded != null}?'':'p-6'"> <!--.-->
                                 <input id="avatarFile" type="file" name="avatarFile" class="hidden"> <!--.-->
@@ -83,16 +82,16 @@
                             </div>
 
                             <!-- tag::textinputs[] -->
-                            <div th:replace="fragments/forms :: textinput(#{user.firstName}, 'firstName', 'sm:col-span-3')"></div>
-                            <div th:replace="fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')"></div>
-                            <div th:replace="fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')"></div>
-                            <th:block th:if="${editMode?.name() == 'CREATE'}"> <!--.-->
-                                <div th:replace="fragments/forms :: textinput(labelText=#{user.password}, fieldName='password', cssClass='sm:col-span-4', inputType='password')"></div>
-                                <div th:replace="fragments/forms :: textinput(labelText=#{user.password.repeated}, fieldName='passwordRepeated', cssClass='sm:col-span-4', inputType='password')"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.firstName}, 'firstName', 'sm:col-span-3')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.lastName}, 'lastName', 'sm:col-span-3')}"></div>
+                            <div th:replace="~{fragments/forms :: textinput(labelText=#{user.email}, fieldName='email', cssClass='sm:col-span-4', inputType='email')}"></div>
+                            <th:block th:if="${editMode?.name() == 'CREATE'}">
+                                <div th:replace="~{fragments/forms :: textinput(labelText=#{user.password}, fieldName='password', cssClass='sm:col-span-4', inputType='password')}"></div>
+                                <div th:replace="~{fragments/forms :: textinput(labelText=#{user.password.repeated}, fieldName='passwordRepeated', cssClass='sm:col-span-4', inputType='password')}"></div>
                             </th:block>
-                            <div th:replace="fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{user.phoneNumber}, 'phoneNumber', 'sm:col-span-4')}"></div>
                             <div class="sm:col-span-2"></div>
-                            <div th:replace="fragments/forms :: dateinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2')"></div>
+                            <div th:replace="~{fragments/forms :: dateinput(labelText=#{user.birthday}, fieldName='birthday', cssClass='sm:col-span-2')}"></div>  <!--.-->
                             <!-- end::textinputs[] -->
                         </div>
                     </div>

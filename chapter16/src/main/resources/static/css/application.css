@@ -1,4 +1,3 @@
-/* tag::duet */
 :root {
   --duet-color-primary: #005fcc;
   --duet-color-text: #333;
@@ -23,7 +22,6 @@
 .error-border .duet-date__input {
   border: 1px solid #f8b4b4;
 }
-/* end::duet */
 
 @tailwind base;
 @tailwind components;

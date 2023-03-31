@@ -3,7 +3,7 @@ package com.tamingthymeleaf.application.user;
 import com.google.common.base.MoreObjects;
 import org.springframework.util.Assert;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable

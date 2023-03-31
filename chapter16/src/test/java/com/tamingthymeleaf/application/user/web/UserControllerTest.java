@@ -1,6 +1,7 @@
 package com.tamingthymeleaf.application.user.web;
 
 import com.tamingthymeleaf.application.infrastructure.security.StubUserDetailsService;
+import com.tamingthymeleaf.application.infrastructure.security.WebSecurityConfiguration;
 import com.tamingthymeleaf.application.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +17,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import static com.tamingthymeleaf.application.infrastructure.security.StubUserDetailsService.USERNAME_USER;
@@ -43,18 +45,19 @@ class UserControllerTest {
     }
 
     @Test
-    @WithUserDetails(USERNAME_USER)
+    @WithUserDetails(USERNAME_USER) //<.>
     void testGetUsersAsUser() throws Exception {
 
-        when(userService.getUsers(any(Pageable.class)))
-                .thenReturn(Page.empty());
+        when(userService.getUsers(any(Pageable.class))) //<.>
+                                                        .thenReturn(Page.empty());
 
         mockMvc.perform(get("/users"))
                .andDo(print())
-               .andExpect(status().isOk());
+               .andExpect(status().isOk()); //<.>
     }
 
     @TestConfiguration
+    @Import(WebSecurityConfiguration.class)
     static class TestConfig {
         @Bean
         public PasswordEncoder passwordEncoder() {
@@ -62,7 +65,7 @@ class UserControllerTest {
         }
 
         @Bean
-        public ITemplateResolver svgTemplateResolver() {
+        public ITemplateResolver svgTemplateResolver() { //<.>
             SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
             resolver.setPrefix("classpath:/templates/svg/");
             resolver.setSuffix(".svg");
@@ -72,7 +75,7 @@ class UserControllerTest {
         }
 
         @Bean
-        public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) { //<.>
             return new StubUserDetailsService(passwordEncoder);
         }
     }

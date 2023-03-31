@@ -25,11 +25,11 @@
                       method="post"
                       enctype="multipart/form-data">
                     <div>
-                        <div th:replace="fragments/forms :: fielderrors"></div>
+                        <div th:replace="~{fragments/forms :: fielderrors}"></div>
                         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                             <input type="hidden" th:field="*{version}" th:if="${editMode?.name() == 'UPDATE'}">
 
-                            <div th:replace="fragments/forms :: textinput(#{team.name}, 'name', 'sm:col-span-3')"></div>
+                            <div th:replace="~{fragments/forms :: textinput(#{team.name}, 'name', 'sm:col-span-3')}"></div>
                             <div class="sm:col-span-3"></div>
                             <!-- tag::coach-select[] -->
                             <div class="sm:col-span-3">
@@ -53,7 +53,7 @@
                                 <div id="teamplayer-forms"
                                      th:data-teamplayers-count="${team.players.length}"> <!--.-->
                                     <th:block th:each="player, iter : ${team.players}">
-                                        <div th:replace="teams/edit-teamplayer-fragment :: teamplayer-form(index=${iter.index}, teamObjectName='team')"></div> <!--.-->
+                                        <div th:replace="~{teams/edit-teamplayer-fragment :: teamplayer-form(index=${iter.index}, teamObjectName='team')}"></div> <!--.-->
                                     </th:block>
                                 </div>
                                 <div class="mt-4">
@@ -105,6 +105,14 @@
                         teamPlayerForms.setAttribute('data-teamplayers-count', parseInt(count) + 1); // <.>
                     });
         }
+
+        <!-- tag::removeTeamPlayerForm[] -->
+        function removeTeamPlayerForm(formIndex) {
+            const teamplayerForm = document.getElementById('teamplayer-form-section-' + formIndex);
+            teamplayerForm.parentElement.removeChild(teamplayerForm);
+        }
+
+        <!-- end::removeTeamPlayerForm[] -->
 
         function htmlToElement(html) {
             const template = document.createElement('template');

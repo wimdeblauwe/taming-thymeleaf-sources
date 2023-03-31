@@ -2,7 +2,7 @@ package com.tamingthymeleaf.application.user;
 
 import org.springframework.format.Formatter;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.text.ParseException;
 import java.util.Locale;
 

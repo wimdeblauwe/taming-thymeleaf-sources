@@ -28,15 +28,20 @@
                 </select>
             </div>
         </div>
+        <!-- tag::delete[] -->
         <div class="ml-1 sm:col-span-2 flex items-center text-green-600 hover:text-green-900">
             <div class="h-6 w-6">
-                <svg th:replace="trash"></svg>
+                <svg th:replace="~{trash}"></svg>
             </div>
             <a href="#"
                class="ml-1"
-               th:text="#{team.player.remove}">
+               th:text="#{team.player.remove}"
+               x-data
+               th:attr="data-formindex=__${index}__"
+               @click="removeTeamPlayerForm($el.dataset.formindex)"> <!--.-->
             </a>
         </div>
+        <!-- end::delete[] -->
     </div>
 </div>
 </html>

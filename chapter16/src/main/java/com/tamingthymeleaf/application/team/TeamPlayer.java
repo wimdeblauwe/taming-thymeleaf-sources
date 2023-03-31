@@ -3,8 +3,8 @@ package com.tamingthymeleaf.application.team;
 import com.tamingthymeleaf.application.user.User;
 import io.github.wimdeblauwe.jpearl.AbstractEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class TeamPlayer extends AbstractEntity<TeamPlayerId> {

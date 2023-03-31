@@ -10,10 +10,10 @@
 </head>
 <body>
 <div layout:fragment="page-content">
-    <div th:replace="fragments/titles :: title-with-button(#{teams.title}, 'user-add', #{teams.add}, @{/teams/create}, 'add-team-button')"
+    <div th:replace="~{fragments/titles :: title-with-button(#{teams.title}, 'user-add', #{teams.add}, @{/teams/create}, 'add-team-button')}"
          sec:authorize="hasRole('ADMIN')"></div>
     <div th:if="${deletedTeamName}">
-        <div th:replace="fragments/alerts :: success(#{team.delete.success(${deletedTeamName})})"></div>
+        <div th:replace="~{fragments/alerts :: success(#{team.delete.success(${deletedTeamName})})}"></div>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div class="py-4">
@@ -23,20 +23,20 @@
                         <table id="teams-table" class="min-w-full">
                             <thead>
                             <tr>
-                                <th th:replace="fragments/table :: header(#{team.name})"></th>
-                                <th th:replace="fragments/table :: header(title=#{team.coach},hideOnMobile=true)"></th>
+                                <th th:replace="~{fragments/table :: header(#{team.name})}"></th>
+                                <th th:replace="~{fragments/table :: header(title=#{team.coach},hideOnMobile=true)}"></th>
                                 <th:block sec:authorize="hasRole('ADMIN')">
-                                    <th th:replace="fragments/table :: header('')"></th>
-                                    <th th:replace="fragments/table :: header('')"></th>
+                                    <th th:replace="~{fragments/table :: header('')}"></th>
+                                    <th th:replace="~{fragments/table :: header('')}"></th>
                                 </th:block>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="bg-white" th:each="team : ${teams}">
-                                <td th:replace="fragments/table :: data(contents=${team.name},primary=true)"></td>
-                                <td th:replace="fragments/table :: data(contents=${team.coachName.fullName},hideOnMobile=true)"></td>
+                                <td th:replace="~{fragments/table :: data(contents=${team.name},primary=true)}"></td>
+                                <td th:replace="~{fragments/table :: data(contents=${team.coachName.fullName},hideOnMobile=true)}"></td>
                                 <th:block sec:authorize="hasRole('ADMIN')">
-                                    <td th:replace="fragments/table :: dataWithLink('Edit', @{'/teams/'+ ${team.id.asString()}})"></td>
+                                    <td th:replace="~{fragments/table :: dataWithLink('Edit', @{'/teams/'+ ${team.id.asString()}})}"></td>
                                     <td th:x-data="|{name: '${team.name}', deleteUrl: '/teams/${team.id.asString()}/delete'}|"
                                         class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                         <a href="javascript:void(0)"
@@ -49,7 +49,7 @@
                             </tbody>
                         </table>
                         <th:block th:if="${teams.content.size() > 0}">
-                            <div th:replace="fragments/pagination :: controls(page=${teams})"></div>
+                            <div th:replace="~{fragments/pagination :: controls(page=${teams})}"></div>
                         </th:block>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
             };
         }
     </script>
-    <script th:replace="fragments/alerts :: alert-js"></script>
+    <script th:replace="~{fragments/alerts :: alert-js}"></script>
 </th:block>
 </body>
 </html>

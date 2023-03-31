@@ -15,8 +15,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.Nonnull;
-import javax.validation.Valid;
+import jakarta.annotation.Nonnull;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/teams")
@@ -71,7 +71,7 @@ public class TeamController {
 
         return "redirect:/teams";
     }
-
+    
     // end::doCreateTeam[]
 
     // tag::editTeamForm[]

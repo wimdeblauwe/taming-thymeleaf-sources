@@ -30,16 +30,16 @@ public class EditUserFormData extends AbstractUserFormData {
     // tag::toParameters[]
     public EditUserParameters toParameters() {
         EditUserParameters parameters = new EditUserParameters(version,
-                                                               new UserName(getFirstName(), getLastName()),
-                                                               getGender(),
-                                                               getBirthday(),
-                                                               new Email(getEmail()),
+                                      new UserName(getFirstName(), getLastName()),
+                                      getGender(),
+                                      getBirthday(),
+                                      new Email(getEmail()),
                                                                getPhoneNumber());
 
         if (getAvatarFile() != null
                 && !getAvatarFile().isEmpty()) {
             parameters.setAvatar(getAvatarFile());
-        }
+    }
 
         return parameters;
     }

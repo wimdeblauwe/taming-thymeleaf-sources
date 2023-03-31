@@ -20,6 +20,6 @@ public class TeamRepositoryImpl implements TeamRepositoryCustom {
     @Override
     public TeamPlayerId nextPlayerId() {
         return new TeamPlayerId(generator.getNextUniqueId());
-    }
+}
     // end::nextPlayerId[]
 }

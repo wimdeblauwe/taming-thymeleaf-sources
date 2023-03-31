@@ -54,7 +54,7 @@ public class TeamServiceImpl implements TeamService {
                 .orElseThrow(() -> new TeamNotFoundException(teamId));
         if (team.getVersion() != parameters.getVersion()) {
             throw new ObjectOptimisticLockingFailureException(User.class, team.getId().asString());
-        }
+    }
 
         team.setName(parameters.getName());
         team.setCoach(getUser(parameters.getCoachId()));
