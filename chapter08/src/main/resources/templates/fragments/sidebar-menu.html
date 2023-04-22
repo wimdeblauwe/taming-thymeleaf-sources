@@ -72,12 +72,12 @@
             <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <!-- tag::mobile-nav[] -->
                 <nav class="space-y-1 px-2">
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')"></a>
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link=@{/users}, title='Users', menuItem='users', icon='users')"></a>
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link=@{/teams}, title='Teams', menuItem='teams', icon='user-group')"></a>
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')"></a>
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents', icon='documents')"></a>
-                    <a th:replace="fragments/sidebar-buttons :: mobile-button(link='#', title='Reports', menuItem='reports', icon='reports')"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link=@{/users}, title='Users', menuItem='users', icon='users')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link=@{/teams}, title='Teams', menuItem='teams', icon='user-group')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents', icon='documents')}"></a>
+                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Reports', menuItem='reports', icon='reports')}"></a>
                 </nav>
                 <!-- end::mobile-nav[] -->
             </div>
@@ -101,12 +101,12 @@
         <div class="mt-5 flex flex-grow flex-col">
             <!-- tag::sidebar[] -->
             <nav class="flex-1 space-y-1 px-2 pb-4">
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.dashboard}, menuItem='dashboard', icon='dashboard')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link=@{/users}, title=#{menu.users}, menuItem='users', icon='users')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link=@{/teams}, title=#{menu.teams}, menuItem='teams', icon='user-group')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.calendar}, menuItem='calendar', icon='calendar')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.documents}, menuItem='documents', icon='documents')"></a>
-                <a th:replace="fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.reports}, menuItem='reports', icon='reports')"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.dashboard}, menuItem='dashboard', icon='dashboard')}"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link=@{/users}, title=#{menu.users}, menuItem='users', icon='users')}"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link=@{/teams}, title=#{menu.teams}, menuItem='teams', icon='user-group')}"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.calendar}, menuItem='calendar', icon='calendar')}"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.documents}, menuItem='documents', icon='documents')}"></a>
+                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title=#{menu.reports}, menuItem='reports', icon='reports')}"></a>
             </nav>
             <!-- end::sidebar[] -->
         </div>

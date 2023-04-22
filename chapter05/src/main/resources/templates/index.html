@@ -16,13 +16,13 @@
 <div x-data="sidebarMenu()"
      @keydown.window.escape="closeSidebar">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-    <div th:replace="fragments/sidebar-menu :: mobile"></div>
+    <div th:replace="~{fragments/sidebar-menu :: mobile}"></div>
 
     <!-- Static sidebar for desktop -->
-    <div th:replace="fragments/sidebar-menu :: desktop"></div>
+    <div th:replace="~{fragments/sidebar-menu :: desktop}"></div>
 
     <div class="flex flex-1 flex-col lg:pl-64">
-        <div th:replace="fragments/top-menu :: menu"></div>
+        <div th:replace="~{fragments/top-menu :: menu}"></div>
 
         <main class="flex-1">
             <div class="py-6">

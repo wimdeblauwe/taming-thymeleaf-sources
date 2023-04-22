@@ -13,7 +13,7 @@
 >
     <div class="mr-4 h-6 w-6 flex-shrink-0"
          th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
-        <svg th:replace="${icon}"></svg>
+        <svg th:replace="~{${icon}}"></svg>
     </div>
     [[${title}]]
 </a>
@@ -27,7 +27,7 @@
 >
     <div class="mr-3 h-6 w-6 flex-shrink-0"
          th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
-        <svg th:replace="${icon}"></svg>
+        <svg th:replace="~{${icon}}"></svg>
     </div>
     [[${title}]]
 </a>
