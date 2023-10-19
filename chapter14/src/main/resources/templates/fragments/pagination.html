@@ -6,15 +6,14 @@
 <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
 <!-- tag::controls[] -->
 <div th:fragment="controls"
-     class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-     th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder)}">
+     class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
     <!-- end::controls[] -->
 
     <!-- Mobile pagination -->
     <!-- tag::mobile[] -->
     <div class="flex-1 flex justify-between sm:hidden">
         <a id="pagination-mobile-previous"
-           th:href="${page.isFirst()}?'javascript:void(0)':${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page.number - 1).toUriString()}"
+           th:href="${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
            class="relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
            th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'}"
            th:disabled="${page.isFirst()}"
@@ -22,7 +21,7 @@
             Previous
         </a>
         <a id="pagination-mobile-next"
-           th:href="${page.isLast()}?'javascript:void(0)':${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page.number + 1).toUriString()}"
+           th:href="${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
            class="ml-3 relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
            th:classappend="${page.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'}"
            th:disabled="${page.isLast()}"
@@ -51,7 +50,7 @@
             <nav id="pagination-actions" class="relative z-0 inline-flex shadow-sm">
                 <!-- tag::pagination-previous[] -->
                 <a id="pagination-previous"
-                   th:href="${page.isFirst()}?'javascript:void(0)':${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page.number - 1).toUriString()}"
+                   th:href="${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border bg-white text-sm leading-5 font-medium"
                    th:aria-label="#{pagination.previous}"
                    th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"
@@ -69,7 +68,7 @@
                         th:with="startPage=${T(java.lang.Math).max(1, page.getNumber() - 1)},endPage=${T(java.lang.Math).min(startPage + 4, page.getTotalPages())}">
                     <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
                        th:id="${'pagination-page-' + pageNumber}"
-                       th:href="${urlBuilder.fromCurrentRequest().replaceQueryParam('page', pageNumber - 1).toUriString()}"
+                       th:href="${@urlBuilder.replaceQueryParam('page', pageNumber - 1).toUriString()}"
                        class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
                        th:classappend="${page.number == pageNumber - 1?'font-bold':''}"
                     >
@@ -79,7 +78,7 @@
                 <!-- end::pagenumbers[] -->
 
                 <a id="pagination-next"
-                   th:href="${page.isLast()}?'javascript:void(0)':${urlBuilder.fromCurrentRequest().replaceQueryParam('page', page.number + 1).toUriString()}"
+                   th:href="${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
                    class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border bg-white text-sm leading-5 font-medium"
                    th:aria-label="#{pagination.next}"
                    th:classappend="${page.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"

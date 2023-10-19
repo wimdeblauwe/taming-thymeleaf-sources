@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
@@ -22,6 +24,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
         localeInterceptor.setParamName("lang");
         return localeInterceptor;
+    }
+
+    @Bean
+    @RequestScope
+    public ServletUriComponentsBuilder urlBuilder() {
+        return ServletUriComponentsBuilder.fromCurrentRequest();
     }
 
     @Override
