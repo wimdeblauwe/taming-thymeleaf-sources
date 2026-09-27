@@ -1,16 +1,13 @@
 package com.tamingthymeleaf.application;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import com.tamingthymeleaf.application.user.*;
-import org.apache.commons.lang3.StringUtils;
+import net.datafaker.Faker;
+import net.datafaker.providers.base.Name;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 //tag::class-until-run[]
 @Component
@@ -45,37 +42,32 @@ public class DatabaseInitializer implements CommandLineRunner {
     private CreateUserParameters newRandomUserParameters() {
         UserName userName = randomUserName();
         Gender gender = randomGender();
-        LocalDate birthday = LocalDate.ofInstant(faker.date().birthday(10, 40).toInstant(), ZoneId.systemDefault());
+        LocalDate birthday = faker.timeAndDate().birthday(10, 40);
         Email email = generateEmailForUserName(userName);
         PhoneNumber phoneNumber = randomPhoneNumber();
         return new CreateUserParameters(userName, userName.getFirstName(), gender, birthday, email, phoneNumber);
     }
 
-    @Nonnull
     private UserName randomUserName() {
         Name name = faker.name();
         return new UserName(name.firstName(), name.lastName());
     }
 
-    @Nonnull
-    private PhoneNumber randomPhoneNumber() {
-        return new PhoneNumber(faker.phoneNumber().phoneNumber());
-    }
-
-    @Nonnull
-    private Email generateEmailForUserName(UserName userName) {
-        return new Email(faker.internet().emailAddress(generateEmailLocalPart(userName)));
-    }
-
-    @Nonnull
     private Gender randomGender() {
         return faker.bool().bool() ? Gender.MALE : Gender.FEMALE;
     }
 
-    @Nonnull
+    private Email generateEmailForUserName(UserName userName) {
+        return new Email(faker.internet().emailAddress(generateEmailLocalPart(userName)));
+    }
+
+    private PhoneNumber randomPhoneNumber() {
+        return new PhoneNumber(faker.phoneNumber().phoneNumber());
+    }
+
     private String generateEmailLocalPart(UserName userName) {
         return String.format("%s.%s",
-                             StringUtils.remove(userName.getFirstName().toLowerCase(), "'"),
-                             StringUtils.remove(userName.getLastName().toLowerCase(), "'"));
+                             userName.getFirstName().toLowerCase().replace("'", ""),
+                             userName.getLastName().toLowerCase().replace("'", ""));
     }
 }

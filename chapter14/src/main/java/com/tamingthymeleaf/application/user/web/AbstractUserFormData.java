@@ -4,15 +4,15 @@ import com.tamingthymeleaf.application.infrastructure.validation.ValidationGroup
 import com.tamingthymeleaf.application.infrastructure.validation.ValidationGroupTwo;
 import com.tamingthymeleaf.application.user.Gender;
 import com.tamingthymeleaf.application.user.UserRole;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @NotExistingUser(groups = ValidationGroupTwo.class)
 public class AbstractUserFormData {
     @NotNull
-    private UserRole userRole; //<.>
+    private UserRole userRole;
     @NotBlank
     @Size(min = 1, max = 200, groups = ValidationGroupOne.class)
     private String firstName;

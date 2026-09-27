@@ -39,12 +39,12 @@ public class User extends AbstractVersionedEntity<UserId> {
     // tag::constructors[]
     private User(UserId id,
                  Set<UserRole> roles,
-                UserName userName,
+                 UserName userName,
                  String password,
-                Gender gender,
-                LocalDate birthday,
-                Email email,
-                PhoneNumber phoneNumber) {
+                 Gender gender,
+                 LocalDate birthday,
+                 Email email,
+                 PhoneNumber phoneNumber) {
         super(id);
         this.roles = roles;
         this.userName = userName;

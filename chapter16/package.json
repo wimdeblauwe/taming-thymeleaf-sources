@@ -1,36 +1,20 @@
 {
-  "name": "taming-thymeleaf-application",
-  "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@tailwindcss/forms": "^0.5.3",
-    "autoprefixer": "^10.4.14",
-    "browser-sync": "^2.28.3",
-    "cssnano": "^5.1.15",
-    "mkdirp": "^2.1.5",
-    "npm-run-all": "^4.1.5",
-    "onchange": "^7.1.0",
-    "path-exists-cli": "^2.0.0",
-    "postcss": "^8.4.21",
-    "postcss-cli": "^10.1.0",
-    "recursive-copy-cli": "^1.0.20",
-    "tailwindcss": "^3.2.7"
+  "dependencies": {
+    "cally": "^0.9.2"
   },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/vite": "^4.3.3",
+    "@wim.deblauwe/vite-plugin-spring-boot": "^1.1.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.0"
+  },
+  "name": "taming-thymeleaf",
+  "private": true,
   "scripts": {
-    "build": "npm-run-all --parallel build:*",
-    "build:html": "recursive-copy \"src/main/resources/templates\" target/classes/templates -w",
-    "build:css": "mkdirp target/classes/static/css && postcss src/main/resources/static/css/*.css -d target/classes/static/css",
-    "build:js": "path-exists src/main/resources/static/js && (mkdirp target/classes/static/js && babel src/main/resources/static/js/ --out-dir target/classes/static/js/) || echo \"No 'src/main/resources/static/js' directory found.\"",
-    "build:svg": "path-exists src/main/resources/static/svg && recursive-copy \"src/main/resources/static/svg\" target/classes/static/svg -w -f \"**/*.svg\" || echo \"No 'src/main/resources/static/svg' directory found.\"",
-    "build-prod": "NODE_ENV='production' npm-run-all --parallel build-prod:*",
-    "build-prod:html": "npm run build:html",
-    "build-prod:css": "npm run build:css",
-    "build-prod:js": "path-exists src/main/resources/static/js && (mkdirp target/classes/static/js && babel src/main/resources/static/js/ --minified --out-dir target/classes/static/js/) || echo \"No 'src/main/resources/static/js' directory found.\"",
-    "build-prod:svg": "npm run build:svg",
-    "watch": "npm-run-all --parallel watch:*",
-    "watch:html": "onchange \"src/main/resources/templates/**/*.html\" -- npm-run-all --serial build:css build:html",
-    "watch:css": "onchange \"src/main/resources/static/css/**/*.css\" -- npm run build:css",
-    "watch:js": "onchange \"src/main/resources/static/js/**/*.js\" -- npm run build:js",
-    "watch:svg": "onchange \"src/main/resources/static/svg/**/*.svg\" -- npm run build:svg",
-    "watch:serve": "browser-sync start --no-inject-changes --proxy localhost:8080 --files \"target/classes/templates\" \"target/classes/static\""
-  }
+    "dev": "vite",
+    "dev-open": "vite --open http://localhost:8080",
+    "build": "vite build"
+  },
+  "type": "module"
 }

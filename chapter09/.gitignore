@@ -1,11 +1,8 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-node_modules
-node
-.env
 
 ### STS ###
 .apt_generated
@@ -34,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Excludes for npm/pnpm
+node_modules
+node
+
+# Local environment variables for Docker Compose
+.env

@@ -6,9 +6,9 @@ import com.tamingthymeleaf.application.user.CreateUserParameters;
 import com.tamingthymeleaf.application.user.Gender;
 import com.tamingthymeleaf.application.user.PhoneNumber;
 import com.tamingthymeleaf.application.user.UserName;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @NotExistingUser(groups = ValidationGroupTwo.class)
@@ -33,7 +33,7 @@ public class CreateUserFormData {
 
     // tag::getters-and-setters-comment[]
     // Getters and setters omitted
-    // tag::getters-and-setters-comment[]
+    // end::getters-and-setters-comment[]
 
     // tag::getters-and-setters[]
 
@@ -84,7 +84,6 @@ public class CreateUserFormData {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
     // end::getters-and-setters[]
     // tag::toParameters[]
     public CreateUserParameters toParameters() {

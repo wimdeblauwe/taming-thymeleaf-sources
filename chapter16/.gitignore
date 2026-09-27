@@ -1,15 +1,8 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-node_modules
-src/test/e2e/cypress/reports
-src/test/e2e/cypress/videos
-src/test/e2e/cypress/screenshots
-node
-.env
-application-local.properties
 
 ### STS ###
 .apt_generated
@@ -38,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Excludes for npm/pnpm
+node_modules
+node
+
+# Local environment variables for Docker Compose
+.env
+
+# Cypress test results
+src/test/e2e/cypress/reports
+src/test/e2e/cypress/videos
+src/test/e2e/cypress/screenshots

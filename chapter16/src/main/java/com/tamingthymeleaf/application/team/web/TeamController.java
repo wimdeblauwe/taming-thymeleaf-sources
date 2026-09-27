@@ -15,7 +15,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 
 @Controller
@@ -71,7 +70,6 @@ public class TeamController {
 
         return "redirect:/teams";
     }
-    
     // end::doCreateTeam[]
 
     // tag::editTeamForm[]
@@ -159,14 +157,13 @@ public class TeamController {
         }
 
         @Override
-        public boolean supports(@Nonnull Class<?> clazz) {
+        public boolean supports(Class<?> clazz) {
             return validator.supports(clazz);
         }
 
         @Override
-        public void validate(@Nonnull Object target, @Nonnull Errors errors) {
-            if (target instanceof CreateTeamFormData) { //<.>
-                CreateTeamFormData formData = (CreateTeamFormData) target;
+        public void validate(Object target, Errors errors) {
+            if (target instanceof CreateTeamFormData formData) { //<.>
                 formData.removeEmptyTeamPlayerForms(); //<.>
             }
 

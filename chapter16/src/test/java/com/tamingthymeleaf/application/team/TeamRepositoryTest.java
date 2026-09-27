@@ -1,5 +1,6 @@
 package com.tamingthymeleaf.application.team;
 
+import com.tamingthymeleaf.application.TestcontainersConfiguration;
 import com.tamingthymeleaf.application.user.User;
 import com.tamingthymeleaf.application.user.UserName;
 import com.tamingthymeleaf.application.user.UserRepository;
@@ -9,10 +10,10 @@ import io.github.wimdeblauwe.jpearl.UniqueIdGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +28,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 @DataJpaTest
 @ActiveProfiles("data-jpa-test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestcontainersConfiguration.class)
 class TeamRepositoryTest {
     private final TeamRepository repository;
     private final UserRepository userRepository;
@@ -113,7 +114,7 @@ class TeamRepositoryTest {
     @TestConfiguration
     static class TestConfig {
         @Bean
-        public UniqueIdGenerator<UUID> uniqueIdGenerator() { //<.>
+        public UniqueIdGenerator<UUID> uniqueIdGenerator() {
             return new InMemoryUniqueIdGenerator();
         }
     }

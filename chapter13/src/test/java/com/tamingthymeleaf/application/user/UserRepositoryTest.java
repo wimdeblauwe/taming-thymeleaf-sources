@@ -1,14 +1,15 @@
 package com.tamingthymeleaf.application.user;
 
+import com.tamingthymeleaf.application.TestcontainersConfiguration;
 import io.github.wimdeblauwe.jpearl.InMemoryUniqueIdGenerator;
 import io.github.wimdeblauwe.jpearl.UniqueIdGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("data-jpa-test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestcontainersConfiguration.class)
 class UserRepositoryTest {
     private final UserRepository repository;
     private final JdbcTemplate jdbcTemplate;
@@ -43,7 +44,7 @@ class UserRepositoryTest {
         assertThat(repository.count()).isZero();
     }
 
-
+    // tag::testSaveUser[]
     @Test
     void testSaveUser() {
         UserId id = repository.nextId();
@@ -64,6 +65,7 @@ class UserRepositoryTest {
         assertThat(jdbcTemplate.queryForObject("SELECT email FROM tt_user", String.class)).isEqualTo("tommy.walton@gmail.com");
         assertThat(jdbcTemplate.queryForObject("SELECT phone_number FROM tt_user", String.class)).isEqualTo("202 555 0192");
     }
+    // end::testSaveUser[]
 
     // tag::testFindAllPageable[]
     @Test

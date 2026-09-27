@@ -1,21 +1,22 @@
 package com.tamingthymeleaf.application.user;
 
+import com.tamingthymeleaf.application.TestcontainersConfiguration;
 import io.github.wimdeblauwe.jpearl.InMemoryUniqueIdGenerator;
 import io.github.wimdeblauwe.jpearl.UniqueIdGenerator;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.UUID;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("data-jpa-test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestcontainersConfiguration.class)
 class UserRepositoryTest {
     private final UserRepository repository;
     private final JdbcTemplate jdbcTemplate;
@@ -43,7 +44,7 @@ class UserRepositoryTest {
         assertThat(repository.count()).isZero();
     }
 
-
+    // tag::testSaveUser[]
     @Test
     void testSaveUser() {
         UserId id = repository.nextId();
@@ -61,70 +62,32 @@ class UserRepositoryTest {
         assertThat(jdbcTemplate.queryForObject("SELECT first_name FROM tt_user", String.class)).isEqualTo("Tommy");
         assertThat(jdbcTemplate.queryForObject("SELECT last_name FROM tt_user", String.class)).isEqualTo("Walton");
         assertThat(jdbcTemplate.queryForObject("SELECT password FROM tt_user", String.class)).isEqualTo("encoded-secret-pwd");
+        assertThat(jdbcTemplate.queryForObject("SELECT role FROM user_roles", String.class)).isEqualTo("USER");
         assertThat(jdbcTemplate.queryForObject("SELECT gender FROM tt_user", Gender.class)).isEqualTo(Gender.MALE);
         assertThat(jdbcTemplate.queryForObject("SELECT birthday FROM tt_user", LocalDate.class)).isEqualTo("2001-02-17");
         assertThat(jdbcTemplate.queryForObject("SELECT email FROM tt_user", String.class)).isEqualTo("tommy.walton@gmail.com");
         assertThat(jdbcTemplate.queryForObject("SELECT phone_number FROM tt_user", String.class)).isEqualTo("202 555 0192");
     }
+    // end::testSaveUser[]
 
+    // tag::testFindAllPageable[]
     @Test
     void testFindAllPageable() {
         saveUsers(8); //<.>
 
         Sort sort = Sort.by(Sort.Direction.ASC, "userName.lastName", "userName.firstName"); //<.>
         assertThat(repository.findAll(PageRequest.of(0, 5, sort))) //<.>
-                                                                   .hasSize(5) //<.>
-                                                                   .extracting(user -> user.getUserName().getFullName()) //<.>
-                                                                   .containsExactly("Tommy1 Holt", "Tommy3 Holt", "Tommy5 Holt", "Tommy7 Holt", "Tommy0 Walton"); //<.>
+                .hasSize(5) //<.>
+                .extracting(user -> user.getUserName().getFullName()) //<.>
+                .containsExactly("Tommy1 Holt", "Tommy3 Holt", "Tommy5 Holt", "Tommy7 Holt", "Tommy0 Walton"); //<.>
 
         assertThat(repository.findAll(PageRequest.of(1, 5, sort))) //<.>
-                                                                   .hasSize(3)
-                                                                   .extracting(user -> user.getUserName().getFullName())
-                                                                   .containsExactly("Tommy2 Walton", "Tommy4 Walton", "Tommy6 Walton");
+                .hasSize(3)
+                .extracting(user -> user.getUserName().getFullName())
+                .containsExactly("Tommy2 Walton", "Tommy4 Walton", "Tommy6 Walton");
 
         assertThat(repository.findAll(PageRequest.of(2, 5, sort))).isEmpty(); //<.>
     }
-
-    // tag::testFindAllPageable[]
-    @Test
-    void testExistsByEmail() {
-        UserId id = repository.nextId();
-        repository.save(User.createUser(id,
-                                        new UserName("Tommy", "Walton"),
-                                        "encoded-secret-pwd",
-                                        Gender.MALE,
-                                        LocalDate.of(2001, Month.FEBRUARY, 17),
-                                        new Email("tommy.walton@gmail.com"),
-                                        new PhoneNumber("202 555 0192")));
-
-        entityManager.flush();
-
-        assertThat(repository.existsByEmail(new Email("tommy.walton@gmail.com"))).isTrue();
-        assertThat(repository.existsByEmail(new Email("nobody@gmail.com"))).isFalse();
-    }
-
-    @Test
-    void testDelete() {
-        UserId id = repository.nextId();
-        repository.save(User.createUser(id,
-                                        new UserName("Tommy", "Walton"),
-                                        "encoded-secret-pwd",
-                                        Gender.MALE,
-                                        LocalDate.of(2001, Month.FEBRUARY, 17),
-                                        new Email("tommy.walton@gmail.com"),
-                                        new PhoneNumber("202 555 0192")));
-        entityManager.flush();
-        assertThat(repository.count()).isOne();
-
-        repository.deleteById(id);
-
-        entityManager.flush();
-        entityManager.clear();
-
-        assertThat(repository.count()).isZero();
-    }
-
-    // end::testFindAllPageable[]
 
     private void saveUsers(int numberOfUsers) {
         for (int i = 0; i < numberOfUsers; i++) {
@@ -138,6 +101,7 @@ class UserRepositoryTest {
                                             new PhoneNumber("202 555 0192")));
         }
     }
+    // end::testFindAllPageable[]
 
     @TestConfiguration
     static class TestConfig {

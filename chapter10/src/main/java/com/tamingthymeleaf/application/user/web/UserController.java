@@ -22,8 +22,8 @@ public class UserController {
     public String index(Model model,
                         @SortDefault.SortDefaults({
                                 @SortDefault("userName.lastName"),
-                                @SortDefault("userName.firstName")}) Pageable pageable) { //<.>
-        model.addAttribute("users", service.getUsers(pageable)); //<.>
+                                @SortDefault("userName.firstName")}) Pageable pageable) {
+        model.addAttribute("users", service.getUsers(pageable));
         return "users/list";
     }
 }

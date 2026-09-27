@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserService {
         LOGGER.debug("Creating administrator {} ({})", parameters.getUserName().getFullName(), parameters.getEmail().asString());
         UserId userId = repository.nextId();
         User user = User.createAdministrator(userId,
-                             parameters.getUserName(),
+                                             parameters.getUserName(),
                                              passwordEncoder.encode(parameters.getPassword()),
-                             parameters.getGender(),
-                             parameters.getBirthday(),
-                             parameters.getEmail(),
-                             parameters.getPhoneNumber());
+                                             parameters.getGender(),
+                                             parameters.getBirthday(),
+                                             parameters.getEmail(),
+                                             parameters.getPhoneNumber());
         return repository.save(user);
     }
     // end::create[]
@@ -70,11 +70,13 @@ public class UserServiceImpl implements UserService {
     }
     // end::editUser[]
 
+    // tag::getUsers[]
     @Override
     @Transactional(readOnly = true)
     public Page<User> getUsers(Pageable pageable) {
         return repository.findAll(pageable);
     }
+    // end::getUsers[]
 
     @Override
     @Transactional(readOnly = true)
@@ -82,17 +84,23 @@ public class UserServiceImpl implements UserService {
         return repository.existsByEmail(email);
     }
 
+    // tag::getUser[]
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> getUser(UserId userId) {
         return repository.findById(userId);
     }
+    // end::getUser[]
 
+    // tag::deleteUser[]
     @Override
     public void deleteUser(UserId userId) {
-        repository.deleteById(userId);
+        repository.deleteById(userId); //<.>
     }
+    // end::deleteUser[]
 
     @Override
+    @Transactional(readOnly = true)
     public long countUsers() {
         return repository.count();
     }

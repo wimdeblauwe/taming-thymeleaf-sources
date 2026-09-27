@@ -1,15 +1,13 @@
 package com.tamingthymeleaf.application;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import com.tamingthymeleaf.application.user.*;
-import org.apache.commons.lang3.StringUtils;
+import net.datafaker.Faker;
+import net.datafaker.providers.base.Name;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 @Component
 @Profile("init-db") //<.>
@@ -33,7 +31,7 @@ public class DatabaseInitializer implements CommandLineRunner { //<.>
         Name name = faker.name();
         UserName userName = new UserName(name.firstName(), name.lastName());
         Gender gender = faker.bool().bool() ? Gender.MALE : Gender.FEMALE;
-        LocalDate birthday = LocalDate.ofInstant(faker.date().birthday(10, 40).toInstant(), ZoneId.systemDefault());
+        LocalDate birthday = faker.timeAndDate().birthday(10, 40);
         Email email = new Email(faker.internet().emailAddress(generateEmailLocalPart(userName)));
         PhoneNumber phoneNumber = new PhoneNumber(faker.phoneNumber().phoneNumber());
         return new CreateUserParameters(userName, gender, birthday, email, phoneNumber);
@@ -41,7 +39,7 @@ public class DatabaseInitializer implements CommandLineRunner { //<.>
 
     private String generateEmailLocalPart(UserName userName) {
         return String.format("%s.%s",
-                             StringUtils.remove(userName.getFirstName().toLowerCase(), "'"),
-                             StringUtils.remove(userName.getLastName().toLowerCase(), "'"));
+                             userName.getFirstName().toLowerCase().replace("'", ""),
+                             userName.getLastName().toLowerCase().replace("'", ""));
     }
 }

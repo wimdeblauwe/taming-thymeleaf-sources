@@ -8,11 +8,11 @@
 <!-- tag::mobile-button[] -->
 <a th:fragment="mobile-button(link, title, menuItem, icon)"
    th:href="${link}"
-   class="group flex items-center rounded-md px-2 py-2 text-base font-medium"
-   th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+   class="group flex items-center rounded-md px-2 py-2 text-sm font-medium"
+   th:classappend="${activeMenuItem == menuItem}? 'bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white' : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white'"
 >
     <div class="mr-4 h-6 w-6 flex-shrink-0"
-         th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
+         th:classappend="${activeMenuItem == menuItem}?'text-indigo-600 dark:text-white':'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white'">
         <svg th:replace="~{${icon}}"></svg>
     </div>
     [[${title}]]
@@ -23,10 +23,10 @@
 <a th:fragment="desktop-button(link, title, menuItem, icon)"
    th:href="${link}"
    class="group flex items-center rounded-md px-2 py-2 text-sm font-medium"
-   th:classappend="${activeMenuItem == menuItem}? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+   th:classappend="${activeMenuItem == menuItem} ? 'bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white' : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white'"
 >
     <div class="mr-3 h-6 w-6 flex-shrink-0"
-         th:classappend="${activeMenuItem == menuItem}?'text-gray-500':'text-gray-400 group-hover:text-gray-500'">
+         th:classappend="${activeMenuItem == menuItem}?'text-indigo-600 dark:text-white':'text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white'">
         <svg th:replace="~{${icon}}"></svg>
     </div>
     [[${title}]]

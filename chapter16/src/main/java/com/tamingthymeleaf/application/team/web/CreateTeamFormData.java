@@ -4,7 +4,6 @@ import com.tamingthymeleaf.application.team.CreateTeamParameters;
 import com.tamingthymeleaf.application.team.TeamPlayerParameters;
 import com.tamingthymeleaf.application.user.UserId;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -57,7 +56,6 @@ public class CreateTeamFormData {
         return new CreateTeamParameters(name, coachId, getTeamPlayerParameters());
     }
 
-    @Nonnull
     protected Set<TeamPlayerParameters> getTeamPlayerParameters() {
         return Arrays.stream(players)
                      .map(teamPlayerFormData -> new TeamPlayerParameters(teamPlayerFormData.getPlayerId(),

@@ -2,9 +2,9 @@ package com.tamingthymeleaf.application.user.web;
 
 import com.tamingthymeleaf.application.infrastructure.validation.ValidationGroupTwo;
 import com.tamingthymeleaf.application.user.CreateUserParameters;
+import com.tamingthymeleaf.application.user.Email;
 import com.tamingthymeleaf.application.user.PhoneNumber;
 import com.tamingthymeleaf.application.user.UserName;
-
 import jakarta.validation.constraints.NotBlank;
 
 @PasswordsMatch(groups = ValidationGroupTwo.class) //<.>
@@ -35,7 +35,7 @@ public class CreateUserFormData extends AbstractUserFormData {
                                         password,
                                         getGender(),
                                         getBirthday(),
-                                        new com.tamingthymeleaf.application.user.Email(getEmail()),
+                                        new Email(getEmail()),
                                         new PhoneNumber(getPhoneNumber()));
     }
 }

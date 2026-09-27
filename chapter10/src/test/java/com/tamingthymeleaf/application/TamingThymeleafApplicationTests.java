@@ -1,14 +1,12 @@
 package com.tamingthymeleaf.application;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.context.annotation.Import;
 
 // tag::classdef[]
 @SpringBootTest
-@ActiveProfiles("spring-boot-test")
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestcontainersConfiguration.class)
 class TamingThymeleafApplicationTests {
     // end::classdef[]
     @Test

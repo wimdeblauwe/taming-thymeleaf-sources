@@ -5,48 +5,47 @@
 <div th:fragment="textinput(labelText, fieldName, cssClass)"
      th:with="inputType=${inputType?:'text'},placeholder=${placeholder?:''}"
      th:class="${cssClass}">
-    <label th:for="${fieldName}" class="block text-sm font-medium text-gray-700"
+    <label th:for="${fieldName}" class="block text-sm/6 font-medium text-gray-900 dark:text-white"
            th:text="${labelText}">
         Text input label
     </label>
-    <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="mt-2 grid grid-cols-1">
         <input th:id="${fieldName}"
                th:type="${inputType}"
                th:placeholder="${placeholder}"
                th:field="*{__${fieldName}__}"
-               class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md"
-               th:classappend="${#fields.hasErrors('__${fieldName}__')?'border-red-300 focus:border-red-300 focus:ring-red-500':'focus:ring-green-500 focus:border-green-500'}">
-        <div th:if="${#fields.hasErrors('__${fieldName}__')}"
-             class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clip-rule="evenodd"/>
-            </svg>
-        </div>
+               class="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pl-3 text-base outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 dark:bg-white/5"
+               th:classappend="${#fields.hasErrors('__${fieldName}__')?'pr-10 text-red-900 outline-red-300 placeholder:text-red-300 focus:outline-red-600 sm:pr-9 dark:text-red-400 dark:outline-red-500/50 dark:placeholder:text-red-400/70 dark:focus:outline-red-400':'pr-3 text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline-green-600 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-green-500'}">
+        <svg th:if="${#fields.hasErrors('__${fieldName}__')}"
+             viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true"
+             class="pointer-events-none col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-red-500 sm:size-4 dark:text-red-400">
+            <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM8 4a.75.75 0 0 1 .75.75v3a.75.75 0 0 1-1.5 0v-3A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+                  clip-rule="evenodd" fill-rule="evenodd"/>
+        </svg>
     </div>
     <p th:if="${#fields.hasErrors('__${fieldName}__')}"
        th:text="${#strings.listJoin(#fields.errors('__${fieldName}__'), ', ')}"
-       class="mt-2 text-sm text-red-600" th:id="'__${fieldName}__'+ '-error'">Field validation error message(s).</p>
+       class="mt-2 text-sm text-red-600 dark:text-red-400" th:id="'__${fieldName}__'+ '-error'">Field validation error message(s).</p>
 </div>
 <!-- end::textinput[] -->
 <div th:fragment="fielderrors"
-     class="rounded-md bg-red-50 p-4 mb-4"
+     class="mb-8 rounded-md bg-red-50 p-4 dark:bg-red-500/15 dark:outline dark:outline-red-500/25"
      th:if="${#fields.hasErrors()}"> <!--.-->
     <div class="flex">
-        <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        <div class="shrink-0">
+            <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-red-400">
+                <path d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z"
+                      clip-rule="evenodd" fill-rule="evenodd"/>
             </svg>
         </div>
         <div class="ml-3">
-            <h3 class="text-sm font-medium text-red-800"
+            <h3 class="text-sm font-medium text-red-800 dark:text-red-200"
                 th:text="#{error.messages.summary.title(${#fields.errors().size()})}"> <!--.-->
                 There were 2 errors with your submission
             </h3>
-            <div class="mt-2 text-sm text-red-700">
-                <ul class="list-disc pl-5 space-y-1">
-                    <li th:each="err,iter : ${#fields.errors()}" th:text="${err}"></li> <!--.-->
+            <div class="mt-2 text-sm text-red-700 dark:text-red-200/80">
+                <ul role="list" class="list-disc space-y-1 pl-5">
+                    <li th:each="err : ${#fields.errors()}" th:text="${err}"></li> <!--.-->
                 </ul>
             </div>
         </div>

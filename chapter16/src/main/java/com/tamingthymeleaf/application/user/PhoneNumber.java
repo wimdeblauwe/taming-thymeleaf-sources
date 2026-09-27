@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 // tag::class[]
 public class PhoneNumber {
-    private static final Pattern VALIDATION_PATTERN = Pattern.compile("[0-9.\\-() x/+]+");
+    private static final Pattern VALIDATION_PATTERN = Pattern.compile("^[0-9.\\-() x/+]+$");
     private String phoneNumber;
 
     protected PhoneNumber() {

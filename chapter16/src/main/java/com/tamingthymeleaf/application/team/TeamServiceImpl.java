@@ -53,7 +53,7 @@ public class TeamServiceImpl implements TeamService {
         Team team = getTeam(teamId)
                 .orElseThrow(() -> new TeamNotFoundException(teamId));
         if (team.getVersion() != parameters.getVersion()) {
-            throw new ObjectOptimisticLockingFailureException(User.class, team.getId().asString());
+            throw new ObjectOptimisticLockingFailureException(Team.class, team.getId().asString());
     }
 
         team.setName(parameters.getName());
@@ -86,7 +86,6 @@ public class TeamServiceImpl implements TeamService {
         repository.deleteAll();
     }
 
-    // end::addPlayer[]
 
     private User getUser(UserId userId) {
         return userService.getUser(userId)

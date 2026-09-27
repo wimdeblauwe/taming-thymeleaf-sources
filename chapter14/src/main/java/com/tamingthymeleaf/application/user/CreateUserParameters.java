@@ -1,18 +1,19 @@
 package com.tamingthymeleaf.application.user;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
+
 import java.time.LocalDate;
 
 public class CreateUserParameters {
     private final UserName userName;
-    private final String password;
+    private final @Nullable String password;
     private final Gender gender;
     private final LocalDate birthday;
     private final Email email;
     private final PhoneNumber phoneNumber;
 
     public CreateUserParameters(UserName userName,
-                                String password,
+                                @Nullable String password,
                                 Gender gender,
                                 LocalDate birthday,
                                 Email email,
@@ -29,8 +30,7 @@ public class CreateUserParameters {
         return userName;
     }
 
-    @Nullable
-    public String getPassword() {
+    public @Nullable String getPassword() {
         return password;
     }
 

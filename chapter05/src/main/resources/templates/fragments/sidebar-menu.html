@@ -1,115 +1,161 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="mobile"
-     class="relative z-40 lg:hidden" role="dialog" aria-modal="true"
-     x-show="isVisible()">
-    <!--
-      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+<el-dialog th:fragment="mobile">
+    <dialog id="sidebar" class="backdrop:bg-transparent lg:hidden">
+        <el-dialog-backdrop class="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"></el-dialog-backdrop>
 
-      Entering: "transition-opacity ease-linear duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "transition-opacity ease-linear duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-    <div class="fixed inset-0 bg-gray-600 bg-opacity-75"
-         x-show="isVisible()"
-         x-cloak
-         x-transition:enter="transition-opacity ease-linear duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition-opacity ease-linear duration-300"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"></div>
+        <div tabindex="0" class="fixed inset-0 flex focus:outline-none">
+            <el-dialog-panel class="group/dialog-panel relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full">
+                <div class="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out group-data-closed/dialog-panel:opacity-0">
+                    <button type="button" command="close" commandfor="sidebar" class="-m-2.5 p-2.5">
+                        <span class="sr-only">Close sidebar</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 text-white">
+                            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
 
-    <div class="fixed inset-0 z-40 flex">
-        <!--
-          Off-canvas menu, show/hide based on off-canvas menu state.
-
-          Entering: "transition ease-in-out duration-300 transform"
-            From: "-translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transition ease-in-out duration-300 transform"
-            From: "translate-x-0"
-            To: "-translate-x-full"
-        -->
-        <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-4"
-             x-show="isVisible()"
-             x-cloak
-             x-transition:enter="transition ease-in-out duration-300 transform"
-             x-transition:enter-start="-translate-x-full"
-             x-transition:enter-end="translate-x-0"
-             x-transition:leave="transition ease-in-out duration-300 transform"
-             x-transition:leave-start="translate-x-0"
-             x-transition:leave-end="-translate-x-full">
-            <!--
-              Close button, show/hide based on off-canvas menu state.
-
-              Entering: "ease-in-out duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-              Leaving: "ease-in-out duration-300"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
-            <div class="absolute top-0 right-0 -mr-12 pt-2">
-                <button type="button"
-                        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                        @click="closeSidebar">
-                    <span class="sr-only">Close sidebar</span>
-                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="flex flex-shrink-0 items-center px-4">
-                <img class="h-8 w-auto"
-                     th:src="@{/svg/application-logo.svg}"
-                     alt="Application Logo">
-            </div>
-            <div class="mt-5 h-0 flex-1 overflow-y-auto">
-                <!-- tag::mobile-nav[] -->
-                <nav class="space-y-1 px-2">
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Team', menuItem='team', icon='team')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Projects', menuItem='projects', icon='projects')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents', icon='documents')}"></a>
-                    <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Reports', menuItem='reports', icon='reports')}"></a>
-                </nav>
-                <!-- end::mobile-nav[] -->
-            </div>
+                <!-- Sidebar component, swap this element with another sidebar if you like -->
+                <div class="relative flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4 dark:bg-gray-900 dark:ring dark:ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 dark:before:bg-black/10">
+                    <div class="relative flex h-16 shrink-0 items-center">
+                        <img th:src="@{/svg/application-logo.svg}" alt="Application Logo" class="h-8 w-auto dark:hidden" />
+                        <img th:src="@{/svg/application-logo.svg}" alt="Application Logo" class="h-8 w-auto not-dark:hidden" />
+                    </div>
+                    <nav class="relative flex flex-1 flex-col">
+                        <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                            <li>
+                                <!-- tag::mobile-nav[] -->
+                                <ul role="list" class="-mx-2 space-y-1">
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Team', menuItem='team', icon='team')}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Projects', menuItem='projects', icon='projects')}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Documents', menuItem='documents', icon='documents')}"></a>
+                                    </li>
+                                    <li>
+                                        <a th:replace="~{fragments/sidebar-buttons :: mobile-button(link='#', title='Reports', menuItem='reports', icon='reports')}"></a>
+                                    </li>
+                                </ul>
+                                <!-- end::mobile-nav[] -->
+                            </li>
+                            <li>
+                                <div class="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                                <ul role="list" class="-mx-2 mt-2 space-y-1">
+                                    <li>
+                                        <!-- Current: "bg-gray-50 dark:bg-white/5 text-indigo-600 dark:text-white", Default: "text-gray-700 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5" -->
+                                        <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                            <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">H</span>
+                                            <span class="truncate">Heroicons</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                            <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">T</span>
+                                            <span class="truncate">Tailwind Labs</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                            <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">W</span>
+                                            <span class="truncate">Workcation</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="mt-auto">
+                                <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white">
+                                        <path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </el-dialog-panel>
         </div>
+    </dialog>
+</el-dialog>
 
-        <div class="w-14 flex-shrink-0" aria-hidden="true">
-            <!-- Dummy element to force sidebar to shrink to fit close icon -->
-        </div>
-    </div>
-</div>
-
-<div th:fragment="desktop"
-     class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+<div th:fragment="desktop" class="hidden bg-gray-900 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
     <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
-        <div class="flex flex-shrink-0 items-center px-4">
-            <img class="h-8 w-auto"
-                 th:src="@{/svg/application-logo.svg}"
-                 alt="Application Logo">
+    <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4 dark:border-white/10 dark:bg-black/10">
+        <div class="flex h-16 shrink-0 items-center">
+            <img th:src="@{/svg/application-logo.svg}" alt="Application Logo" class="h-8 w-auto dark:hidden" />
+            <img th:src="@{/svg/application-logo.svg}" alt="Application Logo" class="h-8 w-auto not-dark:hidden" />
         </div>
-        <div class="mt-5 flex flex-grow flex-col">
-            <!-- tag::desktop-nav[] -->
-            <nav class="flex-1 space-y-1 px-2 pb-4">
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')}"></a>
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Team', menuItem='team', icon='team')}"></a>
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Projects', menuItem='projects', icon='projects')}"></a>
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')}"></a>
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Documents', menuItem='documents', icon='documents')}"></a>
-                <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Reports', menuItem='reports', icon='reports')}"></a>
-            </nav>
-            <!-- end::desktop-nav[] -->
-        </div>
+        <nav class="flex flex-1 flex-col">
+            <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                <li>
+                    <!-- tag::desktop-nav[] -->
+                    <ul role="list" class="-mx-2 space-y-1">
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Dashboard', menuItem='dashboard', icon='dashboard')}"></a>
+                        </li>
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Team', menuItem='team', icon='team')}"></a>
+                        </li>
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Projects', menuItem='projects', icon='projects')}"></a>
+                        </li>
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Calendar', menuItem='calendar', icon='calendar')}"></a>
+                        </li>
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Documents', menuItem='documents', icon='documents')}"></a>
+                        </li>
+                        <li>
+                            <a th:replace="~{fragments/sidebar-buttons :: desktop-button(link='#', title='Reports', menuItem='reports', icon='reports')}"></a>
+                        </li>
+                    </ul>
+                    <!-- end::desktop-nav[] -->
+                </li>
+                <li>
+                    <div class="text-xs/6 font-semibold text-gray-400">Your teams</div>
+                    <ul role="list" class="-mx-2 mt-2 space-y-1">
+                        <li>
+                            <!-- Current: "bg-gray-50 dark:bg-white/5 text-indigo-600 dark:text-white", Default: "text-gray-700 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5" -->
+                            <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">H</span>
+                                <span class="truncate">Heroicons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">T</span>
+                                <span class="truncate">Tailwind Labs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white">
+                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-[0.625rem] font-medium text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white">W</span>
+                                <span class="truncate">Workcation</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="mt-auto">
+                    <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 shrink-0 text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white">
+                            <path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
+
 </html>

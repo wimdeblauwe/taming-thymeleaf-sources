@@ -6,25 +6,27 @@
 <!--/*@thymesVar id="page" type="org.springframework.data.domain.Page"*/-->
 <!-- tag::controls[] -->
 <div th:fragment="controls"
-     class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+     class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 dark:border-white/10 dark:bg-transparent">
     <!-- end::controls[] -->
 
     <!-- Mobile pagination -->
     <!-- tag::mobile[] -->
-    <div class="flex-1 flex justify-between sm:hidden">
+    <div class="flex flex-1 justify-between sm:hidden">
         <a id="pagination-mobile-previous"
-           th:href="${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
-           class="relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
-           th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'}"
-           th:disabled="${page.isFirst()}"
+           th:with="link=${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
+           th:href="${link}"
+           class="relative inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium"
+           th:classappend="${page.isFirst()?'pointer-events-none border-gray-200 bg-white text-gray-300 dark:border-white/5 dark:bg-transparent dark:text-gray-600':'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-gray-200 dark:hover:bg-white/10'}"
+           th:aria-disabled="${page.isFirst()}"
            th:text="#{pagination.previous}">
             Previous
         </a>
         <a id="pagination-mobile-next"
-           th:href="${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
-           class="ml-3 relative inline-flex items-center px-4 py-2 border text-sm leading-5 font-medium rounded-md"
-           th:classappend="${page.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150'}"
-           th:disabled="${page.isLast()}"
+           th:with="link=${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
+           th:href="${link}"
+           class="relative ml-3 inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium"
+           th:classappend="${page.isLast()?'pointer-events-none border-gray-200 bg-white text-gray-300 dark:border-white/5 dark:bg-transparent dark:text-gray-600':'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-gray-200 dark:hover:bg-white/10'}"
+           th:aria-disabled="${page.isLast()}"
            th:text="#{pagination.next}">
             Next
         </a>
@@ -32,10 +34,10 @@
     <!-- end::mobile[] -->
 
     <!-- Desktop pagination -->
-    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <!-- tag::pagination-summary[] -->
         <div>
-            <p id="pagination-summary" class="text-sm leading-5 text-gray-700">
+            <p id="pagination-summary" class="text-sm text-gray-700 dark:text-gray-300">
                 Showing
                 <span class="font-medium" th:text="${(page.getSize() * page.getNumber()) + 1}">1</span>
                 to
@@ -47,18 +49,19 @@
         </div>
         <!-- end::pagination-summary[] -->
         <div>
-            <nav id="pagination-actions" class="relative z-0 inline-flex shadow-sm">
+            <nav id="pagination-actions" aria-label="Pagination"
+                 class="isolate inline-flex -space-x-px rounded-md shadow-xs dark:shadow-none">
                 <!-- tag::pagination-previous[] -->
                 <a id="pagination-previous"
-                   th:href="${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
-                   class="relative inline-flex items-center px-2 py-2 rounded-l-md border bg-white text-sm leading-5 font-medium"
-                   th:aria-label="#{pagination.previous}"
-                   th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"
-                   th:disabled="${page.isFirst()}">
-                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                              clip-rule="evenodd"/>
+                   th:with="link=${page.isFirst()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number - 1).toUriString()}"
+                   th:href="${link}"
+                   class="relative inline-flex items-center rounded-l-md px-2 py-2 inset-ring inset-ring-gray-300 focus:z-20 focus:outline-offset-0 dark:inset-ring-gray-700"
+                   th:classappend="${page.isFirst()?'pointer-events-none text-gray-200 dark:text-gray-700':'text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5'}"
+                   th:aria-disabled="${page.isFirst()}">
+                    <span class="sr-only" th:text="#{pagination.previous}">Previous</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                        <path d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                              clip-rule="evenodd" fill-rule="evenodd"/>
                     </svg>
                 </a>
                 <!-- end::pagination-previous[] -->
@@ -68,25 +71,27 @@
                         th:with="startPage=${T(java.lang.Math).max(1, page.getNumber() - 1)},endPage=${T(java.lang.Math).min(startPage + 4, page.getTotalPages())}">
                     <a th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
                        th:id="${'pagination-page-' + pageNumber}"
-                       th:href="${@urlBuilder.replaceQueryParam('page', pageNumber - 1).toUriString()}"
-                       class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
-                       th:classappend="${page.number == pageNumber - 1?'font-bold':''}"
-                    >
-                        <span th:text="${pageNumber}" th:remove="tag"></span>
+                       th:with="link=${@urlBuilder.replaceQueryParam('page', pageNumber - 1).toUriString()}"
+                       th:href="${link}"
+                       class="relative inline-flex items-center px-4 py-2 text-sm font-semibold focus:z-20"
+                       th:classappend="${page.number == pageNumber - 1?'z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:focus-visible:outline-indigo-500':'text-gray-900 inset-ring inset-ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:text-gray-200 dark:inset-ring-gray-700 dark:hover:bg-white/5'}"
+                       th:aria-current="${page.number == pageNumber - 1?'page':null}"
+                       th:text="${pageNumber}">
+                        1
                     </a>
                 </th:block>
                 <!-- end::pagenumbers[] -->
 
                 <a id="pagination-next"
-                   th:href="${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
-                   class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border bg-white text-sm leading-5 font-medium"
-                   th:aria-label="#{pagination.next}"
-                   th:classappend="${page.isLast()?'pointer-events-none text-gray-200 border-gray-200':'border-gray-300 text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150'}"
-                   th:disabled="${page.isLast()}">
-                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd"/>
+                   th:with="link=${page.isLast()}?'javascript:void(0)':${@urlBuilder.replaceQueryParam('page', page.number + 1).toUriString()}"
+                   th:href="${link}"
+                   class="relative inline-flex items-center rounded-r-md px-2 py-2 inset-ring inset-ring-gray-300 focus:z-20 focus:outline-offset-0 dark:inset-ring-gray-700"
+                   th:classappend="${page.isLast()?'pointer-events-none text-gray-200 dark:text-gray-700':'text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5'}"
+                   th:aria-disabled="${page.isLast()}">
+                    <span class="sr-only" th:text="#{pagination.next}">Next</span>
+                    <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5">
+                        <path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                              clip-rule="evenodd" fill-rule="evenodd"/>
                     </svg>
                 </a>
             </nav>

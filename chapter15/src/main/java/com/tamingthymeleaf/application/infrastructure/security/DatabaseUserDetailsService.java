@@ -3,7 +3,6 @@ package com.tamingthymeleaf.application.infrastructure.security;
 import com.tamingthymeleaf.application.user.Email;
 import com.tamingthymeleaf.application.user.User;
 import com.tamingthymeleaf.application.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +17,6 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public DatabaseUserDetailsService(UserRepository userRepository) { //<.>
         this.userRepository = userRepository;
     }

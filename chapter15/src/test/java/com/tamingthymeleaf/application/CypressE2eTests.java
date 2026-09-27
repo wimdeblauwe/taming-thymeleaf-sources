@@ -12,12 +12,8 @@ import org.junit.jupiter.api.TestFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,27 +24,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
+@Import(TestcontainersConfiguration.class)
 @ActiveProfiles("integration-test")
-public class CypressE2eTests {
-    @Container
-    private static final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer<>("postgres:12")
-            .withDatabaseName("tamingthymeleafdb")
-            .withUsername("user")
-            .withPassword("secret");
+class CypressE2eTests {
 
     @LocalServerPort
     private int port;
 
     @Autowired
     private UserService userService;
-
-    @DynamicPropertySource
-    static void setup(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgresqlContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", postgresqlContainer::getUsername);
-        registry.add("spring.datasource.password", postgresqlContainer::getPassword);
-    }
 
     @BeforeEach
     void validatePreconditions() {
@@ -57,10 +41,10 @@ public class CypressE2eTests {
 
     @TestFactory //<.>
     List<DynamicContainer> runTests() throws InterruptedException, IOException, TimeoutException { //<.>
-        // Ensure that the Cypress container can access the Spring Boot app running on port `port` via `host.testcontainers.internal`
         org.testcontainers.Testcontainers.exposeHostPorts(port);
         try (CypressContainer container = new CypressContainer()
-                .withLocalServerPort(port)) {
+                .withLocalServerPort(port)
+                .withBrowser("chrome")) {
             container.start();
             CypressTestResults testResults = container.getTestResults();
 

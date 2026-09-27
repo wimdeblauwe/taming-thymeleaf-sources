@@ -44,11 +44,13 @@ public class UserServiceImpl implements UserService {
     }
     // end::editUser[]
 
+    // tag::getUsers[]
     @Override
     @Transactional(readOnly = true)
     public Page<User> getUsers(Pageable pageable) {
         return repository.findAll(pageable);
     }
+    // end::getUsers[]
 
     @Override
     @Transactional(readOnly = true)
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
 
     // tag::getUser[]
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> getUser(UserId userId) {
         return repository.findById(userId);
     }
